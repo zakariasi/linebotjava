@@ -30,7 +30,7 @@ public class Controller {
     @Qualifier("lineSignatureValidator")
     private LineSignatureValidator lineSignatureValidator;
 
-    @RequestMapping(value="https://linebot-zakkariassi.herokuapp.com/webhook", method= RequestMethod.POST)
+    @RequestMapping(value="/webhook", method= RequestMethod.POST)
     public ResponseEntity<String> callback(
             @RequestHeader("X-Line-Signature") String xLineSignature,
             @RequestBody String eventsPayload)
@@ -82,7 +82,7 @@ public class Controller {
         reply(replyMessage);
     }
 
-    @RequestMapping(value="https://linebot-zakkariassi.herokuapp.com/pushmessage/{id}/{message}", method=RequestMethod.GET)
+    @RequestMapping(value="/pushmessage/{id}/{message}", method=RequestMethod.GET)
     public ResponseEntity<String> pushmessage(
             @PathVariable("id") String userId,
             @PathVariable("message") String textMsg
