@@ -61,7 +61,7 @@ public class Controller {
                             || ((MessageEvent) event).getMessage() instanceof VideoMessageContent
                             || ((MessageEvent) event).getMessage() instanceof FileMessageContent
                     ) {
-                        String baseURL     = "https://linebot-zakkariassi.herokuapp.com";
+                        String baseURL     = "https://contohlinebotjava.herokuapp.com";
                         String contentURL  = baseURL+"/content/"+ ((MessageEvent) event).getMessage().getId();
                         String contentType = ((MessageEvent) event).getMessage().getClass().getSimpleName();
                         String textMsg     = contentType.substring(0, contentType.length() -14)
@@ -75,7 +75,6 @@ public class Controller {
                         replyText(messageEvent.getReplyToken(), textMessageContent.getText());
                     }
                 }
-
             });
 
             return new ResponseEntity<>(HttpStatus.OK);
@@ -85,7 +84,6 @@ public class Controller {
         }
 
     }
-
 
     @RequestMapping(value = "/content/{id}", method = RequestMethod.GET)
     public ResponseEntity content(
@@ -114,7 +112,6 @@ public class Controller {
             throw new RuntimeException(e);
         }
     }
-
 
     private void reply(ReplyMessage replyMessage) {
         try {
