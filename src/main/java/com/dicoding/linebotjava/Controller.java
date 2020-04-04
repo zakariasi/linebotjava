@@ -110,12 +110,14 @@ public class Controller {
         } else if(event.getMessage() instanceof TextMessageContent) {
             handleTextMessage(event);
         } else if(event.getMessage() instanceof StickerMessageContent) {
-            replyText(event.getReplyToken(), "Great Sticker!");
+            replySticker(event.getReplyToken(), "11538", "51626496");
         }
         else {
             replyText(event.getReplyToken(), "Unknown Message");
         }
     }
+
+
 
     private void handleGroupRoomChats(MessageEvent event) {
         if(!event.getSource().getUserId().isEmpty()) {
