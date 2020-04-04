@@ -109,7 +109,10 @@ public class Controller {
             handleContentMessage(event);
         } else if(event.getMessage() instanceof TextMessageContent) {
             handleTextMessage(event);
-        } else {
+        } else if(event.getMessage() instanceof StickerMessageContent) {
+            replyText(event.getReplyToken(), "Great Sticker!");
+        }
+        else {
             replyText(event.getReplyToken(), "Unknown Message");
         }
     }
