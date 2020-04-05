@@ -37,8 +37,15 @@ public class BotTemplate {
                 kasusPosi = covidEvents.getData().get(i).getKasusPosi();
                 kasusSemb = covidEvents.getData().get(i).getKasusSemb();
                 kasusMeni = covidEvents.getData().get(i).getKasusMeni();
+                provinsi = covidEvents.getData().get(i).getProvinsi();
 
-                column = new CarouselColumn(fid, kodeProvi, kasusPosi, kasusSemb, kasusMeni);
+                column = new CarouselColumn(provinsi, provinsi.substring(0, (provinsi.length() < 40)?provinsi.length():40), provinsi,
+                        Arrays.asList(
+                                new MessageAction("Summary", "Hello"),
+                                new URIAction("View Page", provinsi),
+                                new MessageAction("Join Event", "join event #"+fid)
+                        )
+                );
 
                 carouselColumn.add(column);
             }
