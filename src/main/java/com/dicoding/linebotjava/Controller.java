@@ -13,6 +13,7 @@ import com.linecorp.bot.model.event.source.GroupSource;
 import com.linecorp.bot.model.event.source.RoomSource;
 import com.linecorp.bot.model.message.FlexMessage;
 import com.linecorp.bot.model.message.StickerMessage;
+import com.linecorp.bot.model.message.TemplateMessage;
 import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.model.message.flex.container.FlexContainer;
 import com.linecorp.bot.model.objectmapper.ModelObjectMapper;
@@ -145,6 +146,8 @@ public class Controller {
 
         if (textMessageContent.getText().toLowerCase().contains("flex")) {
             replyFlexMessage(event.getReplyToken());
+        } else if(textMessageContent.getText().toLowerCase().contains("covid")) {
+            replyText(event.getReplyToken(), "data covid terkini");
         } else {
             replyText(event.getReplyToken(), textMessageContent.getText());
         }
@@ -284,7 +287,4 @@ public class Controller {
             throw new RuntimeException(e);
         }
     }
-
-
-
 }
