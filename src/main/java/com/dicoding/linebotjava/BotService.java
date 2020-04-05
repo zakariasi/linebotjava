@@ -1,6 +1,5 @@
 package com.dicoding.linebotjava;
 
-package com.sampleprojectjava.temanngodinglinebot.service;
 
 import com.linecorp.bot.client.LineMessagingClient;
 import com.linecorp.bot.model.Multicast;
@@ -89,11 +88,5 @@ public class BotService {
         }
     }
 
-    public void leaveRoom(String groupId) {
-        try {
-            lineMessagingClient.leaveGroup(groupId).get();
-        } catch (InterruptedException | ExecutionException e) {
-            throw new RuntimeException(e);
-        }
-    }
+
 }
