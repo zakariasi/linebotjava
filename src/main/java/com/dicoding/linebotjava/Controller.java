@@ -7,33 +7,43 @@ import com.linecorp.bot.client.MessageContentResponse;
 import com.linecorp.bot.model.Multicast;
 import com.linecorp.bot.model.PushMessage;
 import com.linecorp.bot.model.ReplyMessage;
+import com.linecorp.bot.model.event.FollowEvent;
+import com.linecorp.bot.model.event.JoinEvent;
 import com.linecorp.bot.model.event.MessageEvent;
+import com.linecorp.bot.model.event.ReplyEvent;
 import com.linecorp.bot.model.event.message.*;
 import com.linecorp.bot.model.event.source.GroupSource;
 import com.linecorp.bot.model.event.source.RoomSource;
-import com.linecorp.bot.model.message.FlexMessage;
-import com.linecorp.bot.model.message.StickerMessage;
-import com.linecorp.bot.model.message.TemplateMessage;
-import com.linecorp.bot.model.message.TextMessage;
+import com.linecorp.bot.model.event.source.Source;
+import com.linecorp.bot.model.event.source.UserSource;
+import com.linecorp.bot.model.message.*;
 import com.linecorp.bot.model.message.flex.container.FlexContainer;
 import com.linecorp.bot.model.objectmapper.ModelObjectMapper;
 import com.linecorp.bot.model.profile.UserProfileResponse;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.nio.client.CloseableHttpAsyncClient;
+import org.apache.http.impl.nio.client.HttpAsyncClients;
+import org.apache.tomcat.util.http.parser.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+import java.util.stream.Collectors;
+
 
 @RestController
 public class Controller {
@@ -41,6 +51,11 @@ public class Controller {
     @Autowired
     @Qualifier("lineMessagingClient")
     private LineMessagingClient lineMessagingClient;
+
+    private UserProfileResponse sender = null;
+    private BotTemplate botTemplate;
+    private CovidEvents covidEvents = null;
+    private BotService botService;
 
     @Autowired
     @Qualifier("lineSignatureValidator")
@@ -147,10 +162,65 @@ public class Controller {
         if (textMessageContent.getText().toLowerCase().contains("flex")) {
             replyFlexMessage(event.getReplyToken());
         } else if(textMessageContent.getText().toLowerCase().contains("covid")) {
-            replyText(event.getReplyToken(), "data covid terkini");
+            showCarouselEvents(event.getReplyToken());
         } else {
             replyText(event.getReplyToken(), textMessageContent.getText());
         }
+    }
+
+    private void showCarouselEvents(String replyToken) {
+        showCarouselEvents(replyToken, null);
+    }
+
+    private void showCarouselEvents(String replyToken, String additionalInfo) {
+     
+
+        if((covidEvents == null) || (covidEvents.getData().size() < 1)){
+            getCovidEventsData();
+        }
+
+        TemplateMessage carouselEvents = botTemplate.carouselEvents(covidEvents);
+
+        if (additionalInfo == null) {
+            botService.reply(replyToken, carouselEvents);
+            return;
+        }
+
+        List<Message> messageList = new ArrayList<>();
+        messageList.add(new TextMessage(additionalInfo));
+        messageList.add(carouselEvents);
+        botService.reply(replyToken, messageList);
+    }
+
+    private void getCovidEventsData() {
+
+        String URI = "https://indonesia-covid-19.mathdro.id/api/provinsi";
+        System.out.println("URI: " +  URI);
+
+        try (CloseableHttpAsyncClient client = HttpAsyncClients.createDefault()) {
+            client.start();
+            //Use HTTP Get to retrieve data
+            HttpGet get = new HttpGet(URI);
+
+            Future<HttpResponse> future = client.execute(get, null);
+            HttpResponse responseGet = future.get();
+            System.out.println("HTTP executed");
+            System.out.println("HTTP Status of response: " + responseGet.getStatusLine().getStatusCode());
+
+            // Get the response from the GET request
+            InputStream inputStream = responseGet.getEntity().getContent();
+            String encoding = StandardCharsets.UTF_8.name();
+            String jsonResponse = IOUtils.toString(inputStream, encoding);
+
+            System.out.println("Got result");
+            System.out.println(jsonResponse);
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            covidEvents = objectMapper.readValue(jsonResponse, CovidEvents.class);
+        } catch (InterruptedException | ExecutionException | IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     @RequestMapping(value = "/content/{id}", method = RequestMethod.GET)
