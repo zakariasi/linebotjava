@@ -340,7 +340,7 @@ public class Controller {
             }
 
 
-            Datum eventData = covidEvents.getData().get(1);;
+            Datum eventData = covidEvents.getData().get(0);;
 
             ClassLoader classLoader = getClass().getClassLoader();
             String encoding         = StandardCharsets.UTF_8.name();
@@ -357,7 +357,7 @@ public class Controller {
 
             ObjectMapper objectMapper = ModelObjectMapper.createNewObjectMapper();
             FlexContainer flexContainer = objectMapper.readValue(flexTemplate, FlexContainer.class);
-            botService.reply(replyToken, new FlexMessage("Dicoding Academy", flexContainer));
+            botService.reply(replyToken, new FlexMessage("Covid Events", flexContainer));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
