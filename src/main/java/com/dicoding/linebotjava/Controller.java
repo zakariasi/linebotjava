@@ -53,6 +53,9 @@ public class Controller {
     @Qualifier("lineMessagingClient")
     private LineMessagingClient lineMessagingClient;
 
+    private CovidEvents covidEvents = null;
+    private BotService botService;
+
     @Autowired
     @Qualifier("lineSignatureValidator")
     private LineSignatureValidator lineSignatureValidator;
@@ -158,7 +161,7 @@ public class Controller {
         if (textMessageContent.getText().toLowerCase().contains("flex")) {
             replyFlexMessage(event.getReplyToken());
         } else if(textMessageContent.getText().toLowerCase().contains("covid")) {
-            replyText(event.getReplyToken(), "this is covid message");
+            showEventSummary(event.getReplyToken());
         } else {
             replyText(event.getReplyToken(), textMessageContent.getText());
         }
@@ -296,6 +299,66 @@ public class Controller {
         try {
             return lineMessagingClient.getProfile(userId).get();
         } catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void getDicodingEventsData() {
+        // Act as client with GET method
+        String URI = "https://indonesia-covid-19.mathdro.id/api/";
+        System.out.println("URI: " +  URI);
+
+        try (CloseableHttpAsyncClient client = HttpAsyncClients.createDefault()) {
+            client.start();
+            //Use HTTP Get to retrieve data
+            HttpGet get = new HttpGet(URI);
+
+            Future<HttpResponse> future = client.execute(get, null);
+            HttpResponse responseGet = future.get();
+            System.out.println("HTTP executed");
+            System.out.println("HTTP Status of response: " + responseGet.getStatusLine().getStatusCode());
+
+            // Get the response from the GET request
+            InputStream inputStream = responseGet.getEntity().getContent();
+            String encoding = StandardCharsets.UTF_8.name();
+            String jsonResponse = IOUtils.toString(inputStream, encoding);
+
+            System.out.println("Got result");
+            System.out.println(jsonResponse);
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            covidEvents = objectMapper.readValue(jsonResponse, CovidEvents.class);
+        } catch (InterruptedException | ExecutionException | IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void showEventSummary(String replyToken) {
+        try {
+            if (covidEvents == null) {
+                getDicodingEventsData();
+            }
+
+
+            Datum eventData = covidEvents.getData().get(1);;
+
+            ClassLoader classLoader = getClass().getClassLoader();
+            String encoding         = StandardCharsets.UTF_8.name();
+            String flexTemplate     = IOUtils.toString(classLoader.getResourceAsStream("flexMessageCovid19.json"), encoding);
+
+            flexTemplate = String.format(flexTemplate,
+
+                    eventData.getMeninggal(),
+                    eventData.getSembuh(),
+                    eventData.getPerawatan(),
+                    eventData.getJumlahKasus()
+
+                    );
+
+            ObjectMapper objectMapper = ModelObjectMapper.createNewObjectMapper();
+            FlexContainer flexContainer = objectMapper.readValue(flexTemplate, FlexContainer.class);
+            botService.reply(replyToken, new FlexMessage("Dicoding Academy", flexContainer));
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }

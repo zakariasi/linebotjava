@@ -48,7 +48,7 @@
               },
               {
                 "type": "text",
-                "text": "2273",
+                "text": "%1$s",
                 "size": "sm",
                 "color": "#111111",
                 "align": "end"
@@ -68,7 +68,7 @@
               },
               {
                 "type": "text",
-                "text": "1911",
+                "text": "%2$s",
                 "size": "sm",
                 "color": "#111111",
                 "align": "end"
@@ -88,7 +88,7 @@
               },
               {
                 "type": "text",
-                "text": "164",
+                "text": "%3$s",
                 "size": "sm",
                 "color": "#111111",
                 "align": "end"
@@ -109,7 +109,7 @@
               },
               {
                 "type": "text",
-                "text": "198",
+                "text": "%4$s",
                 "size": "xl",
                 "color": "#EB0905",
                 "align": "end",
