@@ -340,7 +340,6 @@ public class Controller {
             }
 
 
-            Datum eventData = covidEvents.getData().get(0);;
 
             ClassLoader classLoader = getClass().getClassLoader();
             String encoding         = StandardCharsets.UTF_8.name();
@@ -348,10 +347,10 @@ public class Controller {
 
             flexTemplate = String.format(flexTemplate,
 
-                    eventData.getMeninggal(),
-                    eventData.getSembuh(),
-                    eventData.getPerawatan(),
-                    eventData.getJumlahKasus()
+                    covidEvents.getMeninggal(),
+                    covidEvents.getSembuh(),
+                    covidEvents.getPerawatan(),
+                    covidEvents.getJumlahKasus()
 
                     );
 
