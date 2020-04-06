@@ -163,66 +163,12 @@ public class Controller {
         if (textMessageContent.getText().toLowerCase().contains("flex")) {
             replyFlexMessage(event.getReplyToken());
         } else if(textMessageContent.getText().toLowerCase().contains("covid")) {
-            showCarouselEvents(event.getReplyToken());
+            replyText(event.getReplyToken(), "this is covid message");
         } else {
             replyText(event.getReplyToken(), textMessageContent.getText());
         }
     }
 
-    private void showCarouselEvents(String replyToken) {
-        showCarouselEvents(replyToken, null);
-    }
-
-    private void showCarouselEvents(String replyToken, String additionalInfo) {
-     
-
-        if((covidEvents == null) || (covidEvents.getData().size() < 1)){
-            getCovidEventsData();
-        }
-
-        TemplateMessage carouselEvents = botTemplate.carouselEvents(covidEvents);
-
-        if (additionalInfo == null) {
-            botService.reply(replyToken, carouselEvents);
-            return;
-        }
-
-        List<Message> messageList = new ArrayList<>();
-        messageList.add(new TextMessage(additionalInfo));
-        messageList.add(carouselEvents);
-        botService.reply(replyToken, messageList);
-    }
-
-    private void getCovidEventsData() {
-
-        String URI = "https://indonesia-covid-19.mathdro.id/api/provinsi";
-        System.out.println("URI: " +  URI);
-
-        try (CloseableHttpAsyncClient client = HttpAsyncClients.createDefault()) {
-            client.start();
-            //Use HTTP Get to retrieve data
-            HttpGet get = new HttpGet(URI);
-
-            Future<HttpResponse> future = client.execute(get, null);
-            HttpResponse responseGet = future.get();
-            System.out.println("HTTP executed");
-            System.out.println("HTTP Status of response: " + responseGet.getStatusLine().getStatusCode());
-
-            // Get the response from the GET request
-            InputStream inputStream = responseGet.getEntity().getContent();
-            String encoding = StandardCharsets.UTF_8.name();
-            String jsonResponse = IOUtils.toString(inputStream, encoding);
-
-            System.out.println("Got result");
-            System.out.println(jsonResponse);
-
-            ObjectMapper objectMapper = new ObjectMapper();
-            covidEvents = objectMapper.readValue(jsonResponse, CovidEvents.class);
-        } catch (InterruptedException | ExecutionException | IOException e) {
-            throw new RuntimeException(e);
-        }
-
-    }
 
     @RequestMapping(value = "/content/{id}", method = RequestMethod.GET)
     public ResponseEntity content(
