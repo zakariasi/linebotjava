@@ -303,7 +303,7 @@ public class Controller {
         }
     }
 
-    private void getDicodingEventsData() {
+    private void getCovidEventsData() {
         // Act as client with GET method
         String URI = "https://indonesia-covid-19.mathdro.id/api/";
         System.out.println("URI: " +  URI);
@@ -336,7 +336,7 @@ public class Controller {
     private void showEventSummary(String replyToken) {
         try {
             if (covidEvents == null) {
-                getDicodingEventsData();
+                getCovidEventsData();
             }
 
 
