@@ -53,11 +53,6 @@ public class Controller {
     @Qualifier("lineMessagingClient")
     private LineMessagingClient lineMessagingClient;
 
-    private UserProfileResponse sender = null;
-    private BotTemplate botTemplate;
-    private CovidEvents covidEvents = null;
-    private BotService botService;
-
     @Autowired
     @Qualifier("lineSignatureValidator")
     private LineSignatureValidator lineSignatureValidator;
