@@ -9,62 +9,66 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
         "meninggal",
         "sembuh",
         "perawatan",
-        "jumlahKasus"
+        "jumlahKasus",
+        "id",
+        "owner_id",
+        "city_id",
+        "quota"
 })
 
 
 
 public class Datum {
 
-    @JsonProperty("meninggal")
-    private int meninggal;
+    @JsonProperty("id")
+    private int id;
+    @JsonProperty("owner_id")
+    private int owner_id;
 
-    @JsonProperty("sembuh")
-    private int sembuh;
-
-    @JsonProperty("perawatan")
-    private int perawatan;
-
-    @JsonProperty("jumlahKasus")
-    private int jumlahKasus;
-
-    @JsonProperty("meninggal")
-    public int getMeninggal() {
-        return meninggal;
+    @JsonProperty("id")
+    public int getId() {
+        return id;
     }
 
-    @JsonProperty("meninggal")
-    public void setMeninggal(int meninggal) {
-        this.meninggal = meninggal;
+    @JsonProperty("id")
+    public void setId(int id) {
+        this.id = id;
     }
 
-    @JsonProperty("sembuh")
-    public int getSembuh() {
-        return sembuh;
+    @JsonProperty("owner_id")
+    public int getOwner_id() {
+        return owner_id;
     }
 
-    @JsonProperty("sembuh")
-    public void setSembuh(int sembuh) {
-        this.sembuh = sembuh;
+    @JsonProperty("owner_id")
+    public void setOwner_id(int owner_id) {
+        this.owner_id = owner_id;
     }
 
-    @JsonProperty("perawatan")
-    public int getPerawatan() {
-        return perawatan;
+    @JsonProperty("city_id")
+    public int getCity_id() {
+        return city_id;
     }
 
-    @JsonProperty("perawatan")
-    public void setPerawatan(int perawatan) {
-        this.perawatan = perawatan;
+    @JsonProperty("city_id")
+    public void setCity_id(int city_id) {
+        this.city_id = city_id;
     }
 
-    @JsonProperty("jumlahKasus")
-    public int getJumlahKasus() {
-        return jumlahKasus;
+    @JsonProperty("quota")
+    public int getQuota() {
+        return quota;
     }
 
-    @JsonProperty("jumlahKasus")
-    public void setJumlahKasus(int jumlahKasus) {
-        this.jumlahKasus = jumlahKasus;
+    @JsonProperty("quota")
+    public void setQuota(int quota) {
+        this.quota = quota;
     }
+
+    @JsonProperty("city_id")
+    private int city_id;
+    @JsonProperty("quota")
+    private int quota;
+
+
 }

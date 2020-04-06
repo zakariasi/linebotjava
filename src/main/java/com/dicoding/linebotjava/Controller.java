@@ -305,7 +305,7 @@ public class Controller {
 
     private void getCovidEventsData() {
         // Act as client with GET method
-        String URI = "https://indonesia-covid-19.mathdro.id/api/";
+        String URI = "https://www.dicoding.com/public/api/events?limit=10&active=-1";
         System.out.println("URI: " +  URI);
 
         try (CloseableHttpAsyncClient client = HttpAsyncClients.createDefault()) {
@@ -340,6 +340,7 @@ public class Controller {
             }
 
 
+            Datum eventData = covidEvents.getData().get(0);;
 
             ClassLoader classLoader = getClass().getClassLoader();
             String encoding         = StandardCharsets.UTF_8.name();
@@ -347,10 +348,10 @@ public class Controller {
 
             flexTemplate = String.format(flexTemplate,
 
-                    covidEvents.getMeninggal(),
-                    covidEvents.getSembuh(),
-                    covidEvents.getPerawatan(),
-                    covidEvents.getJumlahKasus()
+                    eventData.getId(),
+                    eventData.getCity_id(),
+                    eventData.getOwner_id(),
+                    eventData.getQuota()
 
                     );
 

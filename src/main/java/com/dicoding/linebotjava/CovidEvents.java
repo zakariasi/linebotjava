@@ -7,70 +7,34 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-        "meninggal",
-        "sembuh",
-        "perawatan",
-        "jumlahKasus"
+        "success",
+        "data"
 })
 public class CovidEvents {
 
-    @JsonProperty("meninggal")
-    private int meninggal;
+    @JsonProperty("success")
+    private boolean success;
+    @JsonProperty("data")
+    private List<Datum> data = null;
 
-    @JsonProperty("sembuh")
-    private int sembuh;
-
-
-
-    @JsonProperty("perawatan")
-    public int perawatan;
-
-    @JsonProperty("jumlahKasus")
-    public int jumlahKasus;
-
-
-
-
-    @JsonProperty("meninggal")
-    public int getMeninggal() {
-        return meninggal;
+    @JsonProperty("success")
+    public boolean isSuccess() {
+        return success;
     }
 
-    @JsonProperty("meninggal")
-    public void setMeninggal(int meninggal) {
-        this.meninggal = meninggal;
+    @JsonProperty("success")
+    public void setSuccess(boolean success) {
+        this.success = success;
     }
 
-    @JsonProperty("sembuh")
-    public int getSembuh() {
-        return sembuh;
+    @JsonProperty("data")
+    public List<Datum> getData() {
+        return data;
     }
 
-    @JsonProperty("sembuh")
-    public void setSembuh(int sembuh) {
-        this.sembuh = sembuh;
+    @JsonProperty("data")
+    public void setData(List<Datum> data) {
+        this.data = data;
     }
-
-    @JsonProperty("perawatan")
-    public int getPerawatan() {
-        return perawatan;
-    }
-
-    @JsonProperty("perawatan")
-    public void setPerawatan(int perawatan) {
-        this.perawatan = perawatan;
-    }
-
-
-    @JsonProperty("jumlahKasus")
-    public int getJumlahKasus() {
-        return jumlahKasus;
-    }
-
-    @JsonProperty("jumlahKasus")
-    public void setJumlahKasus(int jumlahKasus) {
-        this.jumlahKasus = jumlahKasus;
-    }
-
 
 }
