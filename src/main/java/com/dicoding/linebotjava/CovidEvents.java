@@ -7,25 +7,14 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-        "success",
         "data"
 })
 public class CovidEvents {
 
-    @JsonProperty("success")
-    private boolean success;
+
     @JsonProperty("data")
     private List<Datum> data = null;
 
-    @JsonProperty("success")
-    public boolean isSuccess() {
-        return success;
-    }
-
-    @JsonProperty("success")
-    public void setSuccess(boolean success) {
-        this.success = success;
-    }
 
     @JsonProperty("data")
     public List<Datum> getData() {

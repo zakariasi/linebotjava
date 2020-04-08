@@ -6,69 +6,69 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-        "meninggal",
-        "sembuh",
-        "perawatan",
-        "jumlahKasus",
-        "id",
-        "owner_id",
-        "city_id",
-        "quota"
+        "fid",
+        "kodeProvi",
+        "kasusSemb",
+        "kasusMeni"
 })
 
 
 
 public class Datum {
 
-    @JsonProperty("id")
-    private int id;
-    @JsonProperty("owner_id")
-    private int owner_id;
+    @JsonProperty("fid")
+    private int fid;
 
-    @JsonProperty("id")
-    public int getId() {
-        return id;
+    @JsonProperty("kodeProvi")
+    private int kodeProvi;
+
+    @JsonProperty("kasusSemb")
+    private int kasusSemb;
+
+    @JsonProperty("kasusMeni")
+    private int kasusMeni;
+
+    @JsonProperty("fid")
+    public int getFid() {
+        return fid;
     }
 
-    @JsonProperty("id")
-    public void setId(int id) {
-        this.id = id;
+    @JsonProperty("fid")
+    public void setFid(int fid) {
+        this.fid = fid;
     }
 
-    @JsonProperty("owner_id")
-    public int getOwner_id() {
-        return owner_id;
+    @JsonProperty("kodeProvi")
+    public int getKodeProvi() {
+        return kodeProvi;
     }
 
-    @JsonProperty("owner_id")
-    public void setOwner_id(int owner_id) {
-        this.owner_id = owner_id;
+    @JsonProperty("kodeProvi")
+    public void setKodeProvi(int kodeProvi) {
+        this.kodeProvi = kodeProvi;
     }
 
-    @JsonProperty("city_id")
-    public int getCity_id() {
-        return city_id;
+    @JsonProperty("kasusSemb")
+    public int getKasusSemb() {
+        return kasusSemb;
     }
 
-    @JsonProperty("city_id")
-    public void setCity_id(int city_id) {
-        this.city_id = city_id;
+    @JsonProperty("kasusSemb")
+    public void setKasusSemb(int kasusSemb) {
+        this.kasusSemb = kasusSemb;
     }
 
-    @JsonProperty("quota")
-    public int getQuota() {
-        return quota;
+    @JsonProperty("kasusMeni")
+    public int getKasusMeni() {
+        return kasusMeni;
     }
 
-    @JsonProperty("quota")
-    public void setQuota(int quota) {
-        this.quota = quota;
+    @JsonProperty("kasusMeni")
+    public void setKasusMeni(int kasusMeni) {
+        this.kasusMeni = kasusMeni;
     }
 
-    @JsonProperty("city_id")
-    private int city_id;
-    @JsonProperty("quota")
-    private int quota;
+
 
 
 }
