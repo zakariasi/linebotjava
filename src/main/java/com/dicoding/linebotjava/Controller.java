@@ -157,13 +157,24 @@ public class Controller {
 
     private void handleTextMessage(MessageEvent event) {
         TextMessageContent textMessageContent = (TextMessageContent) event.getMessage();
+        getCovidEventsData();
+
+
+
+        Datum eventData = covidEvents.getData().get(0);;
+
+
+
+
+        int fid = eventData.getFid();
+        String a = String.valueOf(fid);
 
         if (textMessageContent.getText().toLowerCase().contains("flex")) {
             replyFlexMessage(event.getReplyToken());
         } else if(textMessageContent.getText().toLowerCase().contains("covid")) {
-            showEventSummary(event.getReplyToken());
-        } else {
             replyText(event.getReplyToken(), textMessageContent.getText());
+        } else {
+            replyText(event.getReplyToken(), a);
         }
     }
 
