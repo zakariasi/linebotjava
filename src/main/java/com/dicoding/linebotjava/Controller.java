@@ -161,7 +161,7 @@ public class Controller {
 
         if (textMessageContent.getText().toLowerCase().contains("flex")) {
             replyFlexMessage(event.getReplyToken());
-        } else if(textMessageContent.getText().toLowerCase().contains("CVD")) {
+        } else if(textMessageContent.getText().toLowerCase().contains("cvd")) {
             replyText(event.getReplyToken(), covid(textMessageContent.getText()));
         } else {
             replyText(event.getReplyToken(), "uknown message" );
