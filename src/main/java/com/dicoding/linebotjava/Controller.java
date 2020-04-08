@@ -354,11 +354,11 @@ public class Controller {
             }
 
 
-            Datum eventData = covidEvents.getData().get(0);;
+            Datum eventData = covidEvents.getData().get(0);
 
             ClassLoader classLoader = getClass().getClassLoader();
             String encoding         = StandardCharsets.UTF_8.name();
-            String flexTemplate     = IOUtils.toString(classLoader.getResourceAsStream("flex_event.json"), encoding);
+            String flexTemplate     = IOUtils.toString(classLoader.getResourceAsStream("flex_simple.json"), encoding);
 
             flexTemplate = String.format(flexTemplate,
 
