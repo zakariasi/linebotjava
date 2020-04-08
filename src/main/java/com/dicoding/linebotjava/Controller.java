@@ -56,7 +56,7 @@ public class Controller {
     private CovidEvents covidEvents = null;
     private BotService botService;
 
-    String covidString = covid();
+
     @Autowired
     @Qualifier("lineSignatureValidator")
     private LineSignatureValidator lineSignatureValidator;
@@ -162,7 +162,7 @@ public class Controller {
         if (textMessageContent.getText().toLowerCase().contains("flex")) {
             replyFlexMessage(event.getReplyToken());
         } else if(textMessageContent.getText().toLowerCase().contains("covid")) {
-            replyText(event.getReplyToken(), covidString);
+            replyText(event.getReplyToken(), covid());
         } else {
             replyText(event.getReplyToken(), "uknown message" );
         }
@@ -334,10 +334,11 @@ public class Controller {
             String jsonResponse = IOUtils.toString(inputStream, encoding);
 
             System.out.println("Got result");
-            System.out.println(jsonResponse);
+//            System.out.println(jsonResponse);
 
             ObjectMapper objectMapper = new ObjectMapper();
             covidEvents = objectMapper.readValue(jsonResponse, CovidEvents.class);
+
         } catch (InterruptedException | ExecutionException | IOException e) {
             throw new RuntimeException(e);
         }

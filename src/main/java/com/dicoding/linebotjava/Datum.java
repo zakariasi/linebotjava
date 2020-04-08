@@ -8,6 +8,8 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @JsonPropertyOrder({
         "fid",
         "kodeProvi",
+        "provinsi",
+        "kasusPosi",
         "kasusSemb",
         "kasusMeni"
 })
@@ -27,6 +29,34 @@ public class Datum {
 
     @JsonProperty("kasusMeni")
     private int kasusMeni;
+
+    @JsonProperty("provinsi")
+    private String provinsi;
+
+    @JsonProperty("kasusPosi")
+    private int kasusPosi;
+
+
+    @JsonProperty("provinsi")
+    public String getProvinsi() {
+        return provinsi;
+    }
+
+    @JsonProperty("provinsi")
+    public void setProvinsi(String provinsi) {
+        this.provinsi = provinsi;
+    }
+
+    @JsonProperty("kasusPosi")
+    public int getKasusPosi() {
+        return kasusPosi;
+    }
+
+    @JsonProperty("kasusPosi")
+    public void setKasusPosi(int kasusPosi) {
+        this.kasusPosi = kasusPosi;
+    }
+
 
     @JsonProperty("fid")
     public int getFid() {
