@@ -163,8 +163,8 @@ public class Controller {
             replyFlexMessage(event.getReplyToken());
         } else if(textMessageContent.getText().toLowerCase().contains("cvd")) {
             replyText(event.getReplyToken(), covid(textMessageContent.getText()));
-        } else {
-            replyText(event.getReplyToken(), "uknown message" );
+        } else if(textMessageContent.getText().toLowerCase().contains("covid")) {
+            showEventSummary(event.getReplyToken());
         }
     }
 
