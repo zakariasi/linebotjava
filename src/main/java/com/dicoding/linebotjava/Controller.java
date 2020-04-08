@@ -56,6 +56,7 @@ public class Controller {
     private CovidEvents covidEvents = null;
     private BotService botService;
 
+    String covidString = covid();
     @Autowired
     @Qualifier("lineSignatureValidator")
     private LineSignatureValidator lineSignatureValidator;
@@ -161,7 +162,7 @@ public class Controller {
         if (textMessageContent.getText().toLowerCase().contains("flex")) {
             replyFlexMessage(event.getReplyToken());
         } else if(textMessageContent.getText().toLowerCase().contains("covid")) {
-            replyText(event.getReplyToken(), covid());
+            replyText(event.getReplyToken(), covidString);
         } else {
             replyText(event.getReplyToken(), "uknown message" );
         }
