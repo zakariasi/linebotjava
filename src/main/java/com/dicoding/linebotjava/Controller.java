@@ -170,7 +170,7 @@ public class Controller {
 
     private String covid(String input){
         getCovidEventsData();
-        int eventIndex = Integer.parseInt(String.valueOf(input.charAt(3)));
+        int eventIndex = Integer.parseInt(String.valueOf(input.charAt(3)) + String.valueOf(input.charAt(4)));
         Datum eventData = covidEvents.getData().get(eventIndex);;
         int fid = eventData.getFid();
         String a = String.valueOf(fid);
