@@ -7,21 +7,15 @@ import com.linecorp.bot.client.MessageContentResponse;
 import com.linecorp.bot.model.Multicast;
 import com.linecorp.bot.model.PushMessage;
 import com.linecorp.bot.model.ReplyMessage;
-import com.linecorp.bot.model.event.FollowEvent;
-import com.linecorp.bot.model.event.JoinEvent;
 import com.linecorp.bot.model.event.MessageEvent;
-import com.linecorp.bot.model.event.ReplyEvent;
 import com.linecorp.bot.model.event.message.*;
 import com.linecorp.bot.model.event.source.GroupSource;
 import com.linecorp.bot.model.event.source.RoomSource;
-import com.linecorp.bot.model.event.source.Source;
-import com.linecorp.bot.model.event.source.UserSource;
 import com.linecorp.bot.model.message.*;
 import com.linecorp.bot.model.message.flex.container.FlexContainer;
 import com.linecorp.bot.model.objectmapper.ModelObjectMapper;
 import com.linecorp.bot.model.profile.UserProfileResponse;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.StringUtils;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -43,7 +37,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
-import java.util.stream.Collectors;
 
 
 @RestController
@@ -227,7 +220,7 @@ public class Controller {
     private void replyFlexMessage(String replyToken) {
         try {
             ClassLoader classLoader = getClass().getClassLoader();
-            String flexTemplate = IOUtils.toString(classLoader.getResourceAsStream("flexMessageCovid19.json"));
+            String flexTemplate = IOUtils.toString(classLoader.getResourceAsStream("flex_event.json"));
 
 
             ObjectMapper objectMapper = ModelObjectMapper.createNewObjectMapper();
@@ -365,7 +358,7 @@ public class Controller {
 
             ClassLoader classLoader = getClass().getClassLoader();
             String encoding         = StandardCharsets.UTF_8.name();
-            String flexTemplate     = IOUtils.toString(classLoader.getResourceAsStream("flexMessageCovid19.json"), encoding);
+            String flexTemplate     = IOUtils.toString(classLoader.getResourceAsStream("flex_event.json"), encoding);
 
             flexTemplate = String.format(flexTemplate,
 
