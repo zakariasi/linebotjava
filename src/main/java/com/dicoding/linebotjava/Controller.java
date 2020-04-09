@@ -155,7 +155,7 @@ public class Controller {
         List<Message> msgDaftarMenu = new ArrayList<>();
         msgDaftarMenu.add(new TextMessage("Daftar Data Covid-19 : \n\n[A1] Data Covid-19 di Indonesia\n[A2] Data Covid-19 provinsi di Indonesia\n[A3] Data Covid-19 kecamatan di kota Medan"));
 
-        String daftarProvinsi = "[P0] DKI Jakarta\n[P1] Jawa Barat\n[P2] Jawa Timur\n[P3] Banten\n[P4] Jawa Tengah\n[P5] Sulawesi Selatan\n[P6] Bali\n[P7] Sumatera Utara\n[P8] D.I Yogyakarta\n [P9] Papua";
+        String daftarProvinsi = "[P0] DKI Jakarta\n[P1] Jawa Barat\n[P2] Jawa Timur\n[P3] Banten\n[P4] Jawa Tengah\n[P5] Sulawesi Selatan\n[P6] Bali\n[P7] Sumatera Utara\n[P8] D.I Yogyakarta\n [P9] Papua\n[P10] Indonesia\n[P11] Kalimantan Timur\n[P12] Kepulauan Riau\n[P13] Kalimantan Selatan\n[P14] Kalimantan Tengah\n[P15] Sumatera Barat\n[P16] Sumatera Selatan\n[P17] Nusa Tenggara Barat\n[P18] Kalimantan Utara\n[P19] Lampung\n[P20] Sulawesi Tenggara\n[P21] Riau\n[P22] Kalimantan Barat\n[P23] Sulawesi Utara\n[P24] Aceh\n[P25] Sulawesi Tengah\n[P26] Kepulauan Bangka Belitung\n[P27] Maluku\n[P28] Jambi\n[P29] Bengkulu\n[P30] Sulawesi Barat\n[P31] Maluku Utara\n[P32] Papua Barat\n[P33] Nusa Tenggara Timur\n[P34] Gorontalo";
 
         if (textMessageContent.getText().toLowerCase().contains("flex")) {
             replyFlexMessage(event.getReplyToken());
@@ -168,7 +168,7 @@ public class Controller {
         } else if(textMessageContent.getText().toLowerCase().contains("a1")) {
             replyText(event.getReplyToken(), "Data Covid-19 di Indonesia");
         } else if(textMessageContent.getText().toLowerCase().contains("a2")) {
-            replyText(event.getReplyToken(), "Data Covid-19 di Indonesia");
+            replyText(event.getReplyToken(), daftarProvinsi);
         }
     }
 
