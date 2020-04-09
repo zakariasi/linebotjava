@@ -153,9 +153,8 @@ public class Controller {
         TextMessageContent textMessageContent = (TextMessageContent) event.getMessage();
 
         List<Message> msgArray = new ArrayList<>();
-        msgArray.add(new TextMessage("[D1] Medan Amplas"));
-        msgArray.add(new TextMessage("[D2] Medan Baru"));
-        msgArray.add(new TextMessage("[D1] Medan Johor"));
+        msgArray.add(new TextMessage("[D1] Medan Amplas\n{D2] Medan Baru\n[D3] Medan Johor"));
+
 
         if (textMessageContent.getText().toLowerCase().contains("flex")) {
             replyFlexMessage(event.getReplyToken());
