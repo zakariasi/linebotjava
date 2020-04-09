@@ -192,10 +192,10 @@ public class Controller {
 
         Datum eventData = (Datum) covidEvents.getData().get(1).getKec().get(eventIndex);
 
-        int kasusPosi = eventData.getKasusPosi();
-        String kasusPositif = String.valueOf(kasusPosi);
+        int pdp = eventData.getPdp();
+        String pdpKecamatan = String.valueOf(pdp);
 
-       return kasusPositif;
+       return pdpKecamatan;
     }
 
 
