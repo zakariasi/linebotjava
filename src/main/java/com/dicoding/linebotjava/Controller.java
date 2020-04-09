@@ -172,33 +172,31 @@ public class Controller {
             replyText(event.getReplyToken(), daftarProvinsi);
         } else if(textMessageContent.getText().toLowerCase().contains("a3")) {
             replyText(event.getReplyToken(), daftarKecamatanMedan);
+        } else if(textMessageContent.getText().toLowerCase().contains("kc")) {
+            replyText(event.getReplyToken(), covid(textMessageContent.getText()));
         }
     }
 
-//    List<Message> msgArray = new ArrayList<>();
-//    msgArray.add(new TextMessage(textMessageContent.getText()));
-//    msgArray.add(new StickerMessage("1", "106"));
-//    ReplyMessage replyMessage = new ReplyMessage(event.getReplyToken(), msgArray);
-//    reply(replyMessage);
 
-//    private String covid(String input){
-//        getCovidEventsData();
-//
-//        String inputUser = input;
-//        int eventIndex = 0;
-//        if (inputUser.length() == 5) {
-//            eventIndex = Integer.parseInt(String.valueOf(inputUser.charAt(3)) + String.valueOf(inputUser.charAt(4)));
-//        }
-//        if (inputUser.length() == 4) {
-//            eventIndex = Integer.parseInt(String.valueOf(inputUser.charAt(3)));
-//        }
-//
-////        Datum eventData = covidEvents.getData().get(eventIndex);;
-//////        int fid = eventData.getFid();
-////        String a = String.valueOf(fid);
-//
-////        return a;
-//    }
+
+    private String covid(String input){
+        getCovidEventsData();
+
+        int eventIndex = 0;
+        if (input.length() == 4) {
+            eventIndex = Integer.parseInt(String.valueOf(input.charAt(2)) + String.valueOf(input.charAt(3)));
+        }
+        if (input.length() == 3) {
+            eventIndex = Integer.parseInt(String.valueOf(input.charAt(2)));
+        }
+
+        Datum eventData = (Datum) covidEvents.getData().get(1).getKec().get(eventIndex);
+
+        int kasusPosi = eventData.getKasusPosi();
+        String kasusPositif = String.valueOf(kasusPosi);
+
+       return kasusPositif;
+    }
 
 
     @RequestMapping(value = "/content/{id}", method = RequestMethod.GET)
@@ -381,8 +379,8 @@ public class Controller {
             covidEvents = objectMapper.readValue(jsonResponse, CovidEvents.class);
             covidEvents2 = objectMapper.readValue(jsonResponse2, CovidEvents.class);
 
-            Datum eventData = (Datum) covidEvents.getData().get(1).getKec().get(1);
-            Datum eventData2 = (Datum) covidEvents2.getData().get(1);
+//            Datum eventData = (Datum) covidEvents.getData().get(1).getKec().get(1);
+//            Datum eventData2 = (Datum) covidEvents2.getData().get(1);
 
         } catch (InterruptedException | ExecutionException | IOException e) {
             throw new RuntimeException(e);
