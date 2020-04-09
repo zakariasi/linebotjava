@@ -30,12 +30,66 @@ import java.util.List;
         "provinsi",
         "kasusPosi",
         "kasusSemb",
-        "kasusMeni"
+        "kasusMeni",
+        "json",
+        "csv",
+        "links",
+        "old"
+
 })
 
 
 
 public class Datum {
+
+
+
+//data api se-indonesia
+
+    @JsonProperty("json")
+    private String json;
+    @JsonProperty("csv")
+    private String csv;
+    @JsonProperty("links")
+    private String links;
+    @JsonProperty("old")
+    private String old;
+
+    @JsonProperty("json")
+    public String getJson() {
+        return json;
+    }
+    @JsonProperty("json")
+    public void setJson(String json) {
+        this.json = json;
+    }
+    @JsonProperty("csv")
+    public String getCsv() {
+        return csv;
+    }
+    @JsonProperty("csv")
+    public void setCsv(String csv) {
+        this.csv = csv;
+    }
+    @JsonProperty("links")
+    public String getLinks() {
+        return links;
+    }
+    @JsonProperty("links")
+    public void setLinks(String links) {
+        this.links = links;
+    }
+    @JsonProperty("old")
+    public String getOld() {
+        return old;
+    }
+    @JsonProperty("old")
+    public void setOld(String old) {
+        this.old = old;
+    }
+
+
+// data api se-kecamatan kota medan
 
     @JsonProperty("judul")
     private String judul;
@@ -225,6 +279,9 @@ public class Datum {
     public void setSembuh(int sembuh) {
         this.sembuh = sembuh;
     }
+
+
+// data api provinsi di Indonesia
 
     @JsonProperty("fid")
     private int fid;

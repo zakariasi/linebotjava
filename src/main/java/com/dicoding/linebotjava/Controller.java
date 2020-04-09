@@ -152,9 +152,10 @@ public class Controller {
     private void handleTextMessage(MessageEvent event) {
         TextMessageContent textMessageContent = (TextMessageContent) event.getMessage();
 
-        List<Message> msgArray = new ArrayList<>();
-        msgArray.add(new TextMessage("Daftar Data Covid-19 : \n\n[A1] Data Covid-19 di Indonesia\n[A2] Data Covid-19 provinsi di Indonesia\n[A3] Data Covid-19 kecamatan di kota Medan"));
+        List<Message> msgDaftarMenu = new ArrayList<>();
+        msgDaftarMenu.add(new TextMessage("Daftar Data Covid-19 : \n\n[A1] Data Covid-19 di Indonesia\n[A2] Data Covid-19 provinsi di Indonesia\n[A3] Data Covid-19 kecamatan di kota Medan"));
 
+        String daftarProvinsi = "[P0] DKI Jakarta\n[P1] Jawa Barat\n[P2] Jawa Timur\n[P3] Banten\n[P4] Jawa Tengah\n[P5] Sulawesi Selatan\n[P6] Bali\n[P7] Sumatera Utara\n[P8] D.I Yogyakarta\n [P9] Papua";
 
         if (textMessageContent.getText().toLowerCase().contains("flex")) {
             replyFlexMessage(event.getReplyToken());
@@ -163,7 +164,11 @@ public class Controller {
         } else if(textMessageContent.getText().toLowerCase().contains("covid")) {
             showEventSummary(event.getReplyToken());
         } else if(textMessageContent.getText().toLowerCase().contains("menu")) {
-            replyText(event.getReplyToken(), msgArray);
+            replyText(event.getReplyToken(), msgDaftarMenu);
+        } else if(textMessageContent.getText().toLowerCase().contains("a1")) {
+            replyText(event.getReplyToken(), "Data Covid-19 di Indonesia");
+        } else if(textMessageContent.getText().toLowerCase().contains("a2")) {
+            replyText(event.getReplyToken(), "Data Covid-19 di Indonesia");
         }
     }
 
@@ -333,30 +338,48 @@ public class Controller {
     }
 
     private void getCovidEventsData() {
-        // Act as client with GET method
-        String URI = "https://indonesia-covid-19.mathdro.id/api/provinsi";
-        System.out.println("URI: " +  URI);
+        String URI = "http://ec2-3-133-88-244.us-east-2.compute.amazonaws.com/medan_covid/";
+        String URI2 = "https://indonesia-covid-19.mathdro.id/api/provinsi";
+
+
+        CovidEvents covidEvents = null;
+        CovidEvents covidEvents2 = null;
+
+
+
 
         try (CloseableHttpAsyncClient client = HttpAsyncClients.createDefault()) {
             client.start();
             //Use HTTP Get to retrieve data
             HttpGet get = new HttpGet(URI);
+            HttpGet get2 = new HttpGet(URI2);
+
+
 
             Future<HttpResponse> future = client.execute(get, null);
+            Future<HttpResponse> future2 = client.execute(get2, null);
+
+
             HttpResponse responseGet = future.get();
-            System.out.println("HTTP executed");
-            System.out.println("HTTP Status of response: " + responseGet.getStatusLine().getStatusCode());
+            HttpResponse responseGet2 = future2.get();
 
             // Get the response from the GET request
             InputStream inputStream = responseGet.getEntity().getContent();
-            String encoding = StandardCharsets.UTF_8.name();
-            String jsonResponse = IOUtils.toString(inputStream, encoding);
+            InputStream inputStream2 = responseGet2.getEntity().getContent();
 
-            System.out.println("Got result");
-//            System.out.println(jsonResponse);
+
+            String encoding = StandardCharsets.UTF_8.name();
+
+            String jsonResponse = IOUtils.toString(inputStream, encoding);
+            String jsonResponse2 = IOUtils.toString(inputStream2, encoding);
+
 
             ObjectMapper objectMapper = new ObjectMapper();
             covidEvents = objectMapper.readValue(jsonResponse, CovidEvents.class);
+            covidEvents2 = objectMapper.readValue(jsonResponse2, CovidEvents.class);
+
+            Datum eventData = (Datum) covidEvents.getData().get(1).getKec().get(1);
+            Datum eventData2 = (Datum) covidEvents2.getData().get(1);
 
         } catch (InterruptedException | ExecutionException | IOException e) {
             throw new RuntimeException(e);
