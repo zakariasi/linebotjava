@@ -153,7 +153,7 @@ public class Controller {
         TextMessageContent textMessageContent = (TextMessageContent) event.getMessage();
 
         List<Message> msgArray = new ArrayList<>();
-        msgArray.add(new TextMessage("Daftar Data Covid-19 : \n\n[A1]Data Covid-19 di Indonesia\n[A2] Data Covid-19 provinsi di Indonesia\n[A3] Data Covid-19 kecamatan di kota Medan"));
+        msgArray.add(new TextMessage("Daftar Data Covid-19 : \n\n[A1] Data Covid-19 di Indonesia\n[A2] Data Covid-19 provinsi di Indonesia\n[A3] Data Covid-19 kecamatan di kota Medan"));
 
 
         if (textMessageContent.getText().toLowerCase().contains("flex")) {
