@@ -8,12 +8,38 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
         "data"
+
 })
 public class CovidEvents {
 
 
     @JsonProperty("data")
     private List<Datum> data = null;
+
+//    @JsonProperty("kec")
+//    private List<Datum> kec = null;
+//
+//    @JsonProperty("kec")
+//    public List<Datum> getKec() {
+//        return kec;
+//    }
+//
+//    @JsonProperty("kec")
+//    public void setKec(List<Datum> kec) {
+//        this.kec = kec;
+//    }
+
+//    @JsonProperty("kec")
+//    public List<Datum> getKec() {
+//    return kec;
+//}
+//    @JsonProperty("kec")
+//    public void setKec(List<Datum> kec) {
+//        this.kec = kec;
+//    }
+//
+//    @JsonProperty("kec")
+//    private List<Datum> kec;
 
 
     @JsonProperty("data")

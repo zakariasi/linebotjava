@@ -155,30 +155,30 @@ public class Controller {
         if (textMessageContent.getText().toLowerCase().contains("flex")) {
             replyFlexMessage(event.getReplyToken());
         } else if(textMessageContent.getText().toLowerCase().contains("cvd")) {
-            replyText(event.getReplyToken(), covid(textMessageContent.getText()));
+//            replyText(event.getReplyToken(), covid(textMessageContent.getText()));
         } else if(textMessageContent.getText().toLowerCase().contains("covid")) {
             showEventSummary(event.getReplyToken());
         }
     }
 
-    private String covid(String input){
-        getCovidEventsData();
-
-        String inputUser = input;
-        int eventIndex = 0;
-        if (inputUser.length() == 5) {
-            eventIndex = Integer.parseInt(String.valueOf(inputUser.charAt(3)) + String.valueOf(inputUser.charAt(4)));
-        }
-        if (inputUser.length() == 4) {
-            eventIndex = Integer.parseInt(String.valueOf(inputUser.charAt(3)));
-        }
-
-        Datum eventData = covidEvents.getData().get(eventIndex);;
-        int fid = eventData.getFid();
-        String a = String.valueOf(fid);
-
-        return a;
-    }
+//    private String covid(String input){
+//        getCovidEventsData();
+//
+//        String inputUser = input;
+//        int eventIndex = 0;
+//        if (inputUser.length() == 5) {
+//            eventIndex = Integer.parseInt(String.valueOf(inputUser.charAt(3)) + String.valueOf(inputUser.charAt(4)));
+//        }
+//        if (inputUser.length() == 4) {
+//            eventIndex = Integer.parseInt(String.valueOf(inputUser.charAt(3)));
+//        }
+//
+////        Datum eventData = covidEvents.getData().get(eventIndex);;
+//////        int fid = eventData.getFid();
+////        String a = String.valueOf(fid);
+//
+////        return a;
+//    }
 
 
     @RequestMapping(value = "/content/{id}", method = RequestMethod.GET)
@@ -360,14 +360,14 @@ public class Controller {
             String encoding         = StandardCharsets.UTF_8.name();
             String flexTemplate     = IOUtils.toString(classLoader.getResourceAsStream("flex_simple.json"), encoding);
 
-            flexTemplate = String.format(flexTemplate,
-
-                    eventData.getFid(),
-                    eventData.getKasusMeni(),
-                    eventData.getKasusSemb(),
-                    eventData.getKodeProvi()
-
-                    );
+//            flexTemplate = String.format(flexTemplate,
+//
+////                    eventData.getFid(),
+////                    eventData.getKasusMeni(),
+////                    eventData.getKasusSemb(),
+////                    eventData.getKodeProvi()
+//
+//                    );
 
             ObjectMapper objectMapper = ModelObjectMapper.createNewObjectMapper();
             FlexContainer flexContainer = objectMapper.readValue(flexTemplate, FlexContainer.class);
