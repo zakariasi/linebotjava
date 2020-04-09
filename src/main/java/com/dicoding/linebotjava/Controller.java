@@ -152,14 +152,27 @@ public class Controller {
     private void handleTextMessage(MessageEvent event) {
         TextMessageContent textMessageContent = (TextMessageContent) event.getMessage();
 
+        List<Message> msgArray = new ArrayList<>();
+        msgArray.add(new TextMessage("[D1] Medan Amplas"));
+        msgArray.add(new TextMessage("[D2] Medan Baru"));
+        msgArray.add(new TextMessage("[D1] Medan Johor"));
+
         if (textMessageContent.getText().toLowerCase().contains("flex")) {
             replyFlexMessage(event.getReplyToken());
         } else if(textMessageContent.getText().toLowerCase().contains("cvd")) {
 //            replyText(event.getReplyToken(), covid(textMessageContent.getText()));
         } else if(textMessageContent.getText().toLowerCase().contains("covid")) {
             showEventSummary(event.getReplyToken());
+        } else if(textMessageContent.getText().toLowerCase().contains("MENU")) {
+            replyText(event.getReplyToken(), msgArray);
         }
     }
+
+//    List<Message> msgArray = new ArrayList<>();
+//    msgArray.add(new TextMessage(textMessageContent.getText()));
+//    msgArray.add(new StickerMessage("1", "106"));
+//    ReplyMessage replyMessage = new ReplyMessage(event.getReplyToken(), msgArray);
+//    reply(replyMessage);
 
 //    private String covid(String input){
 //        getCovidEventsData();
@@ -240,6 +253,10 @@ public class Controller {
         reply(replyMessage);
     }
 
+    private void replyText(String replyToken, List<Message> msgArray){
+        ReplyMessage replyMessage = new ReplyMessage(replyToken, msgArray);
+        reply(replyMessage);
+    }
 
     private void replySticker(String replyToken, String packageId, String stickerId){
         StickerMessage stickerMessage = new StickerMessage(packageId, stickerId);
