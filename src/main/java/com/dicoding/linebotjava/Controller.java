@@ -190,7 +190,7 @@ public class Controller {
             eventIndex = Integer.parseInt(String.valueOf(input.charAt(2)));
         }
 
-        Datum eventData = (Datum) covidEvents.getData().get(1).getKec().get(eventIndex);
+        Datum eventData = covidEvents.getData().get(1).getKec().get(eventIndex);
 
         int pdp = eventData.getPdp();
         String pdpKecamatan = String.valueOf(pdp);
