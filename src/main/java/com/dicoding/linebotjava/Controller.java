@@ -163,7 +163,7 @@ public class Controller {
 //            replyText(event.getReplyToken(), covid(textMessageContent.getText()));
         } else if(textMessageContent.getText().toLowerCase().contains("covid")) {
             showEventSummary(event.getReplyToken());
-        } else if(textMessageContent.getText().toLowerCase().contains("MENU")) {
+        } else if(textMessageContent.getText().toLowerCase().contains("menu")) {
             replyText(event.getReplyToken(), msgArray);
         }
     }
