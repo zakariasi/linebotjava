@@ -186,7 +186,7 @@ public class Controller {
         String inputUser = input;
         int eventIndex = 0;
         if (inputUser.length() == 4) {
-            eventIndex = Integer.parseInt(String.valueOf(inputUser.charAt(3)) + String.valueOf(inputUser.charAt(2)));
+            eventIndex = Integer.parseInt(String.valueOf(inputUser.charAt(2)) + String.valueOf(inputUser.charAt(3)));
         }
         if (inputUser.length() == 3) {
             eventIndex = Integer.parseInt(String.valueOf(inputUser.charAt(2)));
