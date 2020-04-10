@@ -174,7 +174,7 @@ public class Controller {
         } else if(textMessageContent.getText().toLowerCase().contains("a3")) {
             replyText(event.getReplyToken(), daftarKecamatanMedan);
         } else if(textMessageContent.getText().toLowerCase().contains("kc")) {
-            replyText(event.getReplyToken(), dataKecamatan(textMessageContent.getText()) );
+            replyText(event.getReplyToken(), covid(textMessageContent.getText()) );
         }
     }
 
