@@ -174,8 +174,42 @@ public class Controller {
         } else if(textMessageContent.getText().toLowerCase().contains("a3")) {
             replyText(event.getReplyToken(), daftarKecamatanMedan);
         } else if(textMessageContent.getText().toLowerCase().contains("kc")) {
-            replyText(event.getReplyToken(), covid(textMessageContent.getText()));
+            replyText(event.getReplyToken(), dataKecamatan(textMessageContent.getText()) );
         }
+    }
+
+    private List<Message> dataKecamatan(String input){
+        getCovidEventsData();
+
+        String inputUser = input;
+        int eventIndex = 0;
+        if (inputUser.length() == 4) {
+            eventIndex = Integer.parseInt(String.valueOf(inputUser.charAt(2)) + String.valueOf(inputUser.charAt(3)));
+        }
+        if (inputUser.length() == 3) {
+            eventIndex = Integer.parseInt(String.valueOf(inputUser.charAt(2)));
+        }
+
+        Datum eventData = (Datum) covidEvents.getData().get(1).getKec().get(eventIndex);
+        String namaKecamatan  = eventData.getNama_kecamatan();
+        int odp = eventData.getOdp();
+        int pdp = eventData.getPdp();
+        int positif = eventData.getPositif();
+        int meninggalPositif = eventData.getMeninggal_positif();
+        int meninggalPdp = eventData.getMeninggal_pdp();
+        int sembuh = eventData.getSembuh();
+
+        List<Message> dataKec = new ArrayList<>();
+        dataKec.add(new TextMessage("Nama Kecamatan : " + namaKecamatan));
+        dataKec.add(new TextMessage("Jumlah Odp : " + odp));
+        dataKec.add(new TextMessage("Jumlah Pdp : " + pdp));
+        dataKec.add(new TextMessage("Jumlah Positif : " + positif));
+        dataKec.add(new TextMessage("Jumlah Meninggal (positif) : " + meninggalPositif));
+        dataKec.add(new TextMessage("Jumlah Meninggal (pdp) : " + meninggalPdp));
+        dataKec.add(new TextMessage("Jumlah Sembuh : " + sembuh));
+
+
+        return  dataKec;
     }
 
 
