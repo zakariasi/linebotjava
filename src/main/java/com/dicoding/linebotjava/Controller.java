@@ -47,6 +47,7 @@ public class Controller {
     private LineMessagingClient lineMessagingClient;
 
     private CovidEvents covidEvents = null;
+    private CovidEvents covidEvents2 = null;
     private BotService botService;
 
 
@@ -182,20 +183,19 @@ public class Controller {
     private String covid(String input){
         getCovidEventsData();
 
+        String inputUser = input;
         int eventIndex = 0;
-        if (input.length() == 4) {
-            eventIndex = Integer.parseInt(String.valueOf(input.charAt(2)) + String.valueOf(input.charAt(3)));
+        if (inputUser.length() == 5) {
+            eventIndex = Integer.parseInt(String.valueOf(inputUser.charAt(3)) + String.valueOf(inputUser.charAt(4)));
         }
-        if (input.length() == 3) {
-            eventIndex = Integer.parseInt(String.valueOf(input.charAt(2)));
+        if (inputUser.length() == 4) {
+            eventIndex = Integer.parseInt(String.valueOf(inputUser.charAt(3)));
         }
 
-        Datum eventData = covidEvents.getData().get(1).getKec().get(eventIndex);
+        Datum eventData = (Datum) covidEvents.getData().get(1).getKec().get(eventIndex);
+        String namaKecamatan  = eventData.getNama_kecamatan();
 
-        int pdp = eventData.getPdp();
-        String pdpKecamatan = String.valueOf(pdp);
-
-       return pdpKecamatan;
+        return namaKecamatan;
     }
 
 
@@ -341,11 +341,6 @@ public class Controller {
     private void getCovidEventsData() {
         String URI = "http://ec2-3-133-88-244.us-east-2.compute.amazonaws.com/medan_covid/";
         String URI2 = "https://indonesia-covid-19.mathdro.id/api/provinsi";
-
-
-        CovidEvents covidEvents = null;
-        CovidEvents covidEvents2 = null;
-
 
 
 
