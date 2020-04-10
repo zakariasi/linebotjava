@@ -185,11 +185,11 @@ public class Controller {
 
         String inputUser = input;
         int eventIndex = 0;
-        if (inputUser.length() == 5) {
-            eventIndex = Integer.parseInt(String.valueOf(inputUser.charAt(3)) + String.valueOf(inputUser.charAt(4)));
-        }
         if (inputUser.length() == 4) {
-            eventIndex = Integer.parseInt(String.valueOf(inputUser.charAt(3)));
+            eventIndex = Integer.parseInt(String.valueOf(inputUser.charAt(3)) + String.valueOf(inputUser.charAt(2)));
+        }
+        if (inputUser.length() == 3) {
+            eventIndex = Integer.parseInt(String.valueOf(inputUser.charAt(2)));
         }
 
         Datum eventData = (Datum) covidEvents.getData().get(1).getKec().get(eventIndex);
