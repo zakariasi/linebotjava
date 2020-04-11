@@ -21,14 +21,13 @@ public class CovidApiTest {
         String URI2 = "https://indonesia-covid-19.mathdro.id/api/provinsi";
         String URI3 = "https://indonesia-covid-19.mathdro.id/api/";
         String URI4 = "https://api.kawalcorona.com/sembuh/";
+        String URI5 = "https://api.kawalcorona.com/indonesia/";
 
-        System.out.println("URI: " +  URI);
-        System.out.println("URI: " +  URI2);
-        System.out.println("URI: " +  URI3);
 
         CovidEvents covidEvents = null;
         CovidEvents covidEvents2 = null;
         CovidEvents covidEvents4 = null;
+
 
         try (CloseableHttpAsyncClient client = HttpAsyncClients.createDefault()) {
             client.start();
@@ -37,17 +36,20 @@ public class CovidApiTest {
             HttpGet get2 = new HttpGet(URI2);
             HttpGet get3 = new HttpGet(URI3);
             HttpGet get4 = new HttpGet(URI4);
+            HttpGet get5 = new HttpGet(URI5);
 
 
             Future<HttpResponse> future = client.execute(get, null);
             Future<HttpResponse> future2 = client.execute(get2, null);
             Future<HttpResponse> future3 = client.execute(get3, null);
             Future<HttpResponse> future4 = client.execute(get4, null);
+            Future<HttpResponse> future5 = client.execute(get5, null);
 
             HttpResponse responseGet = future.get();
             HttpResponse responseGet2 = future2.get();
             HttpResponse responseGet3 = future3.get();
             HttpResponse responseGet4 = future4.get();
+            HttpResponse responseGet5 = future5.get();
 //            System.out.println("HTTP executed");
 //            System.out.println("HTTP Status of response: " + responseGet.getStatusLine().getStatusCode());
 
@@ -56,6 +58,7 @@ public class CovidApiTest {
             InputStream inputStream2 = responseGet2.getEntity().getContent();
             InputStream inputStream3 = responseGet3.getEntity().getContent();
             InputStream inputStream4 = responseGet4.getEntity().getContent();
+            InputStream inputStream5 = responseGet5.getEntity().getContent();
 
             String encoding = StandardCharsets.UTF_8.name();
 
@@ -63,6 +66,7 @@ public class CovidApiTest {
             String jsonResponse2 = IOUtils.toString(inputStream2, encoding);
             String jsonResponse3 = IOUtils.toString(inputStream3, encoding);
             String jsonResponse4 = IOUtils.toString(inputStream4, encoding);
+            String jsonResponse5 = IOUtils.toString(inputStream5, encoding);
 //
             System.out.println("Got result API 1");
             System.out.println(jsonResponse);
@@ -76,10 +80,15 @@ public class CovidApiTest {
             System.out.println("Got result API 4");
             System.out.println(jsonResponse4);
 
+            System.out.println("Got result API 5");
+            System.out.println(jsonResponse5);
+
             ObjectMapper objectMapper = new ObjectMapper();
             covidEvents = objectMapper.readValue(jsonResponse, CovidEvents.class);
             covidEvents2 = objectMapper.readValue(jsonResponse2, CovidEvents.class);
             covidEvents4 = objectMapper.readValue(jsonResponse4, CovidEvents.class);
+
+
 
 //
             Datum eventData = (Datum) covidEvents.getData().get(1).getKec().get(1);
@@ -89,6 +98,7 @@ public class CovidApiTest {
 
             int totalPosi = 0;
             int totalMeninggal = 0;
+
             for(int i = 0; i <35; i++){
                 totalPosi = totalPosi + covidEvents2.getData().get(i).getKasusPosi();
                 totalMeninggal = totalMeninggal + covidEvents2.getData().get(i).getKasusMeni();
@@ -119,6 +129,7 @@ public class CovidApiTest {
 
             System.out.println("Data KAWAL CORONA");
             System.out.println(value);
+
 
 
 
