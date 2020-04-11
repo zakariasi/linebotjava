@@ -215,7 +215,11 @@ public class Controller {
 
 
     private String covid(String input){
-        getCovidEventsData();
+
+        if (covidEvents == null) {
+            getCovidEventsDataKecamatanMedan();
+        }
+
 
         String inputUser = input;
         int eventIndex = 0;
@@ -228,6 +232,13 @@ public class Controller {
 
         Datum eventData = (Datum) covidEvents.getData().get(1).getKec().get(eventIndex);
         String namaKecamatan  = eventData.getNama_kecamatan();
+//        String odp = String.valueOf(eventData.getOdp());
+//        String pdp = String.valueOf(eventData.getPdp());
+//        String positif = String.valueOf(eventData.getPositif());
+//        String meninggalPositif = String.valueOf(eventData.getMeninggal_positif());
+//        String meninggalPdp = String.valueOf(eventData.getMeninggal_pdp());
+//        String sembuh = String.valueOf(eventData.getSembuh());
+
 
         return namaKecamatan;
     }
@@ -370,6 +381,46 @@ public class Controller {
         } catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private void getCovidEventsDataKecamatanMedan(){
+        String URI = "http://ec2-3-133-88-244.us-east-2.compute.amazonaws.com/medan_covid/";
+
+        try (CloseableHttpAsyncClient client = HttpAsyncClients.createDefault()) {
+            client.start();
+            //Use HTTP Get to retrieve data
+            HttpGet get = new HttpGet(URI);
+
+
+
+            Future<HttpResponse> future = client.execute(get, null);
+
+
+            HttpResponse responseGet = future.get();
+
+
+            // Get the response from the GET request
+            InputStream inputStream = responseGet.getEntity().getContent();
+
+
+            String encoding = StandardCharsets.UTF_8.name();
+
+            String jsonResponse = IOUtils.toString(inputStream, encoding);
+
+
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            covidEvents = objectMapper.readValue(jsonResponse, CovidEvents.class);
+
+
+//            Datum eventData = (Datum) covidEvents.getData().get(1).getKec().get(1);
+//            Datum eventData2 = (Datum) covidEvents2.getData().get(1);
+
+        } catch (InterruptedException | ExecutionException | IOException e) {
+            throw new RuntimeException(e);
+        }
+
+
     }
 
     private void getCovidEventsData() {
