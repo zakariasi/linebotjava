@@ -11,7 +11,9 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
         "meninggal",
         "sembuh",
         "perawatan",
-        "jumlahKasus"
+        "jumlahKasus",
+        "name",
+        "value"
 
 })
 public class CovidEvents {
@@ -59,10 +61,27 @@ public class CovidEvents {
     @JsonProperty("sembuh")
     private int sembuh;
 
+    @JsonProperty("name")
+    private String name;
+    @JsonProperty("value")
+    private String value;
 
-
-
-
+    @JsonProperty("name")
+    public String getName() {
+        return name;
+    }
+    @JsonProperty("name")
+    public void setName(String name) {
+        this.name = name;
+    }
+    @JsonProperty("value")
+    public String getValue() {
+        return value;
+    }
+    @JsonProperty("value")
+    public void setValue(String value) {
+        this.value = value;
+    }
 
     @JsonProperty("data")
     private List<Datum> data = null;
