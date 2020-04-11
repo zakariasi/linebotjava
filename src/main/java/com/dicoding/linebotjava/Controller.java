@@ -178,39 +178,7 @@ public class Controller {
         }
     }
 
-    private List<Message> dataKecamatan(String input){
-        getCovidEventsDataKecamatanMedan();
 
-        String inputUser = input;
-        int eventIndex = 0;
-        if (inputUser.length() == 4) {
-            eventIndex = Integer.parseInt(String.valueOf(inputUser.charAt(2)) + String.valueOf(inputUser.charAt(3)));
-        }
-        if (inputUser.length() == 3) {
-            eventIndex = Integer.parseInt(String.valueOf(inputUser.charAt(2)));
-        }
-
-        Datum eventData = (Datum) covidEvents.getData().get(1).getKec().get(eventIndex);
-        String namaKecamatan  = eventData.getNama_kecamatan();
-        int odp = eventData.getOdp();
-        int pdp = eventData.getPdp();
-        int positif = eventData.getPositif();
-        int meninggalPositif = eventData.getMeninggal_positif();
-        int meninggalPdp = eventData.getMeninggal_pdp();
-        int sembuh = eventData.getSembuh();
-
-        List<Message> dataKec = new ArrayList<>();
-        dataKec.add(new TextMessage(String.format("Nama Kecamatan : %s", namaKecamatan)));
-        dataKec.add(new TextMessage(String.format("Jumlah Odp : %d", odp)));
-        dataKec.add(new TextMessage(String.format("Jumlah Pdp : %d", pdp)));
-        dataKec.add(new TextMessage(String.format("Jumlah Positif : %d", positif)));
-        dataKec.add(new TextMessage(String.format("Jumlah Meninggal (positif) : %d", meninggalPositif)));
-        dataKec.add(new TextMessage(String.format("Jumlah Meninggal (pdp) : %d", meninggalPdp)));
-        dataKec.add(new TextMessage(String.format("Jumlah Sembuh : %d", sembuh)));
-
-
-        return  dataKec;
-    }
 
 
 
@@ -233,15 +201,18 @@ public class Controller {
 
         Datum eventData = (Datum) covidEvents.getData().get(1).getKec().get(eventIndex);
 
+        String namaKecamatan  = eventData.getNama_kecamatan().toLowerCase();
         String odp = String.valueOf(eventData.getOdp());
-        String namaKecamatan  = eventData.getNama_kecamatan();
-        String dataKecamatan = String.format("Nama Kecamatan: %s\n Total ODP: %s", eventData.getNama_kecamatan(), odp);
-//        String odp = String.valueOf(eventData.getOdp());
-//        String pdp = String.valueOf(eventData.getPdp());
-//        String positif = String.valueOf(eventData.getPositif());
-//        String meninggalPositif = String.valueOf(eventData.getMeninggal_positif());
-//        String meninggalPdp = String.valueOf(eventData.getMeninggal_pdp());
-//        String sembuh = String.valueOf(eventData.getSembuh());
+        String pdp = String.valueOf(eventData.getPdp());
+        String positif = String.valueOf(eventData.getPositif());
+        String meninggalPositif = String.valueOf(eventData.getMeninggal_positif());
+        String meninggalPdp = String.valueOf(eventData.getMeninggal_pdp());
+        String sembuh = String.valueOf(eventData.getSembuh());
+
+
+
+        String dataKecamatan = String.format("Nama Kecamatan: %s\nTotal ODP: %s\nTotal PDP: %s\nTotal positif: %s\nTotal meninggal positif: %s\nTotal meninggal pdp: %s\nTotal sembuh: %s", namaKecamatan, odp, pdp, positif, meninggalPositif, meninggalPdp, sembuh);
+
 
 
         return dataKecamatan;
