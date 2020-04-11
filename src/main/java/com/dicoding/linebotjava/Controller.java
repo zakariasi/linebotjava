@@ -175,8 +175,46 @@ public class Controller {
             replyText(event.getReplyToken(), daftarKecamatanMedan);
         } else if(textMessageContent.getText().toLowerCase().contains("kc")) {
             replyText(event.getReplyToken(), covid(textMessageContent.getText()) );
+        } else if(textMessageContent.getText().toLowerCase().contains("p")) {
+            replyText(event.getReplyToken(), covidProvinsi(textMessageContent.getText()) );
         }
     }
+
+    private String covidProvinsi(String input){
+
+        if (covidEvents2 == null) {
+            getCovidEventsDataProvinsi();
+        }
+
+
+        String inputUser = input;
+        int eventIndex = 0;
+        if (inputUser.length() == 3) {
+            eventIndex = Integer.parseInt(String.valueOf(inputUser.charAt(1)) + String.valueOf(inputUser.charAt(2)));
+        }
+        if (inputUser.length() == 2) {
+            eventIndex = Integer.parseInt(String.valueOf(inputUser.charAt(1)));
+        }
+
+
+        Datum eventData2 = (Datum) covidEvents2.getData().get(1);
+
+        String namaProvinsi  = eventData2.getProvinsi().toLowerCase();
+        String kasusPositif = String.valueOf(eventData2.getKasusPosi());
+        String kasusSembuh = String.valueOf(eventData2.getKasusSemb());
+        String kasusMeninggal = String.valueOf(eventData2.getKasusMeni());
+
+
+
+
+
+        String dataProvinsi = String.format("Nama provinsi: %s\nTotal positif: %s\nTotal sembuh: %s\nTotal meninggal: %s", namaProvinsi, kasusPositif, kasusSembuh, kasusMeninggal);
+
+
+
+        return dataProvinsi;
+    }
+
 
 
 
@@ -398,7 +436,7 @@ public class Controller {
 
     }
 
-    private void getCovidEventsData() {
+    private void getCovidEventsDataProvinsi() {
 
         String URI2 = "https://indonesia-covid-19.mathdro.id/api/provinsi";
 
@@ -445,7 +483,7 @@ public class Controller {
     private void showEventSummary(String replyToken) {
         try {
             if (covidEvents == null) {
-                getCovidEventsData();
+                getCovidEventsDataKecamatanMedan();
             }
 
 
