@@ -228,7 +228,7 @@ public class Controller {
 
 
 
-        String dataIndonesia = String.format("Total Kasus Covid-19 di Indonesia \nTotal Positif: %s\nTotal meninggal: %s\nTotal sembuh: %s", String.valueOf(totalPosi), String.valueOf(totalMeninggal), String.valueOf(totalSembuh));
+        String dataIndonesia = String.format("Total Kasus Covid-19 di Indonesia \nTotal Positif: %s\nTotal meninggal: %s\nTotal sembuh: %s\n\n Ketik MENU untuk menampilkann pilihan data yang tersedia", String.valueOf(totalPosi), String.valueOf(totalMeninggal), String.valueOf(totalSembuh));
 
 
 
@@ -258,7 +258,7 @@ public class Controller {
         String kasusSembuh = String.valueOf(eventData2.getKasusSemb());
         String kasusMeninggal = String.valueOf(eventData2.getKasusMeni());
 
-        String dataProvinsi = String.format("Nama provinsi: %s\nTotal positif: %s\nTotal sembuh: %s\nTotal meninggal: %s", namaProvinsi, kasusPositif, kasusSembuh, kasusMeninggal);
+        String dataProvinsi = String.format("Nama provinsi: %s\nTotal positif: %s\nTotal sembuh: %s\nTotal meninggal: %s\n\n Ketik MENU untuk menampilkann pilihan data yang tersedia", namaProvinsi, kasusPositif, kasusSembuh, kasusMeninggal);
 
         return dataProvinsi;
     }
@@ -296,7 +296,7 @@ public class Controller {
 
 
 
-        String dataKecamatan = String.format("Nama Kecamatan: %s\nTotal ODP: %s\nTotal PDP: %s\nTotal positif: %s\nTotal meninggal positif: %s\nTotal meninggal pdp: %s\nTotal sembuh: %s", namaKecamatan, odp, pdp, positif, meninggalPositif, meninggalPdp, sembuh);
+        String dataKecamatan = String.format("Nama Kecamatan: %s\nTotal ODP: %s\nTotal PDP: %s\nTotal positif: %s\nTotal meninggal positif: %s\nTotal meninggal pdp: %s\nTotal sembuh: %s\n\n Ketik MENU untuk menampilkann pilihan data yang tersedia", namaKecamatan, odp, pdp, positif, meninggalPositif, meninggalPdp, sembuh);
 
 
 
