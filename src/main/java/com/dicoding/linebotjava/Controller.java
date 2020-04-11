@@ -425,7 +425,7 @@ public class Controller {
     }
 
     private void getCovidEventsData() {
-        String URI = "http://ec2-3-133-88-244.us-east-2.compute.amazonaws.com/medan_covid/";
+
         String URI2 = "https://indonesia-covid-19.mathdro.id/api/provinsi";
 
 
@@ -433,31 +433,31 @@ public class Controller {
         try (CloseableHttpAsyncClient client = HttpAsyncClients.createDefault()) {
             client.start();
             //Use HTTP Get to retrieve data
-            HttpGet get = new HttpGet(URI);
+
             HttpGet get2 = new HttpGet(URI2);
 
 
 
-            Future<HttpResponse> future = client.execute(get, null);
+
             Future<HttpResponse> future2 = client.execute(get2, null);
 
 
-            HttpResponse responseGet = future.get();
+
             HttpResponse responseGet2 = future2.get();
 
             // Get the response from the GET request
-            InputStream inputStream = responseGet.getEntity().getContent();
+
             InputStream inputStream2 = responseGet2.getEntity().getContent();
 
 
             String encoding = StandardCharsets.UTF_8.name();
 
-            String jsonResponse = IOUtils.toString(inputStream, encoding);
+
             String jsonResponse2 = IOUtils.toString(inputStream2, encoding);
 
 
             ObjectMapper objectMapper = new ObjectMapper();
-            covidEvents = objectMapper.readValue(jsonResponse, CovidEvents.class);
+
             covidEvents2 = objectMapper.readValue(jsonResponse2, CovidEvents.class);
 
 //            Datum eventData = (Datum) covidEvents.getData().get(1).getKec().get(1);
