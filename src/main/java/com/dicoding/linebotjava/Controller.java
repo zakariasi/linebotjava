@@ -197,7 +197,7 @@ public class Controller {
         }
 
 
-        Datum eventData2 = (Datum) covidEvents2.getData().get(1);
+        Datum eventData2 = (Datum) covidEvents2.getData().get(eventIndex);
 
         String namaProvinsi  = eventData2.getProvinsi().toLowerCase();
         String kasusPositif = String.valueOf(eventData2.getKasusPosi());
