@@ -194,9 +194,7 @@ public class Controller {
             showEventSummary(event.getReplyToken());
         } else if(textMessageContent.getText().toLowerCase().contains("menu")) {
             replyText(event.getReplyToken(), msgDaftarMenu);
-        } else if(textMessageContent.getText().toLowerCase().equals("a0")) {
-            replyText(event.getReplyToken(), covidDunia(textMessageContent.getText()));
-        } else if(textMessageContent.getText().toLowerCase().equals("a1")) {
+        }  else if(textMessageContent.getText().toLowerCase().equals("a1")) {
             replyText(event.getReplyToken(), covidIndonesia(textMessageContent.getText()));
         } else if(textMessageContent.getText().toLowerCase().contains("a2")) {
             replyText(event.getReplyToken(), daftarProvinsi);
@@ -443,20 +441,21 @@ public class Controller {
         }
     }
 
-    private String covidDunia(String input){
-        getCovidEventsDataDunia();
-
-
-        String totalSembuh = covidEvents.getValue();
-        String totalPositif = covidEvents2.getValue();
-        String totalMeninggal = covidEvents3.getValue();
-
-        String dataDunia = String.format("Total sembuh: %s\nTotal positif: %s\nTotal meninggal: %s", totalSembuh, totalPositif, totalMeninggal);
-
-
-
-        return dataDunia;
-    }
+//    private String covidDunia(String input){
+//        getCovidEventsDataDunia();
+//
+//
+//
+//        String totalSembuh = covidEvents.getValue();
+//        String totalPositif = covidEvents2.getValue();
+//        String totalMeninggal = covidEvents3.getValue();
+//
+//        String dataDunia = String.format("Total sembuh: %s\nTotal positif: %s\nTotal meninggal: %s", totalSembuh, totalPositif, totalMeninggal);
+//
+//
+//
+//        return dataDunia;
+//    }
 
     private void getCovidEventsDataDunia(){
         String URI1 = "https://api.kawalcorona.com/sembuh/";
