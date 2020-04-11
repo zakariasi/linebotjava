@@ -220,7 +220,7 @@ public class Controller {
         for(int i = 0; i <35; i++){
             totalPosi = totalPosi + covidEvents2.getData().get(i).getKasusPosi();
             totalMeninggal = totalMeninggal + covidEvents2.getData().get(i).getKasusMeni();
-            totalSembuh = totalSembuh + covidEvents2.getData().get(i).getSembuh();
+            totalSembuh = totalSembuh + covidEvents2.getData().get(i).getKasusSemb();
         }
 
 
