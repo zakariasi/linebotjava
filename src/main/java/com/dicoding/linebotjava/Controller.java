@@ -232,6 +232,7 @@ public class Controller {
 
         Datum eventData = (Datum) covidEvents.getData().get(1).getKec().get(eventIndex);
         String namaKecamatan  = eventData.getNama_kecamatan();
+        String dataKecamatan = String.format("Nama Kecamatan: %s", eventData.getNama_kecamatan());
 //        String odp = String.valueOf(eventData.getOdp());
 //        String pdp = String.valueOf(eventData.getPdp());
 //        String positif = String.valueOf(eventData.getPositif());
@@ -240,7 +241,7 @@ public class Controller {
 //        String sembuh = String.valueOf(eventData.getSembuh());
 
 
-        return namaKecamatan;
+        return dataKecamatan;
     }
 
 
