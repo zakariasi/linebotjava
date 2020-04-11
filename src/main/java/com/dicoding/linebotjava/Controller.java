@@ -179,7 +179,7 @@ public class Controller {
     }
 
     private List<Message> dataKecamatan(String input){
-        getCovidEventsData();
+        getCovidEventsDataKecamatanMedan();
 
         String inputUser = input;
         int eventIndex = 0;
