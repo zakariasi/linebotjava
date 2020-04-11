@@ -34,7 +34,6 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.text.MessageFormat;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -175,12 +174,12 @@ public class Controller {
         } else if(textMessageContent.getText().toLowerCase().contains("a3")) {
             replyText(event.getReplyToken(), daftarKecamatanMedan);
         } else if(textMessageContent.getText().toLowerCase().contains("kc")) {
-            replyText(event.getReplyToken(), dataKecamatan(textMessageContent.getText()));
+            replyText(event.getReplyToken(), dataKecamatan(textMessageContent.getText()) );
         }
     }
 
     private List<Message> dataKecamatan(String input){
-        getCovidEventsDataKecamatanMedan();
+        getCovidEventsData();
 
         String inputUser = input;
         int eventIndex = 0;
@@ -201,13 +200,13 @@ public class Controller {
         int sembuh = eventData.getSembuh();
 
         List<Message> dataKec = new ArrayList<>();
-        dataKec.add(new TextMessage(MessageFormat.format("Nama Kecamatan : {0}", namaKecamatan)));
-        dataKec.add(new TextMessage(MessageFormat.format("Jumlah Odp : {0}", odp)));
-        dataKec.add(new TextMessage(MessageFormat.format("Jumlah Pdp : {0}", pdp)));
-        dataKec.add(new TextMessage(MessageFormat.format("Jumlah Positif : {0}", positif)));
-        dataKec.add(new TextMessage(MessageFormat.format("Jumlah Meninggal (positif) : {0}", meninggalPositif)));
-        dataKec.add(new TextMessage(MessageFormat.format("Jumlah Meninggal (pdp) : {0}", meninggalPdp)));
-        dataKec.add(new TextMessage(MessageFormat.format("Jumlah sembuh : {0}", sembuh)));
+        dataKec.add(new TextMessage(String.format("Nama Kecamatan : %s", namaKecamatan)));
+        dataKec.add(new TextMessage(String.format("Jumlah Odp : %d", odp)));
+        dataKec.add(new TextMessage(String.format("Jumlah Pdp : %d", pdp)));
+        dataKec.add(new TextMessage(String.format("Jumlah Positif : %d", positif)));
+        dataKec.add(new TextMessage(String.format("Jumlah Meninggal (positif) : %d", meninggalPositif)));
+        dataKec.add(new TextMessage(String.format("Jumlah Meninggal (pdp) : %d", meninggalPdp)));
+        dataKec.add(new TextMessage(String.format("Jumlah Sembuh : %d", sembuh)));
 
 
         return  dataKec;
