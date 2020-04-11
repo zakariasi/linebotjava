@@ -156,7 +156,7 @@ public class Controller {
         } else if(textMessageContent.getText().toLowerCase().contains("a3")) {
             replyText(event.getReplyToken(), daftarKecamatanMedan);
         } else if(textMessageContent.getText().toLowerCase().contains("kc")) {
-            replyText(event.getReplyToken(), covid(textMessageContent.getText()) );
+            replyText(event.getReplyToken(), covidKecamatan(textMessageContent.getText()) );
         } else if(textMessageContent.getText().toLowerCase().contains("p")) {
             replyText(event.getReplyToken(), covidProvinsi(textMessageContent.getText()) );
         }
@@ -200,7 +200,7 @@ public class Controller {
         } else if(textMessageContent.getText().toLowerCase().contains("a3")) {
             replyText(event.getReplyToken(), daftarKecamatanMedan);
         } else if(textMessageContent.getText().toLowerCase().contains("kc")) {
-            replyText(event.getReplyToken(), covid(textMessageContent.getText()) );
+            replyText(event.getReplyToken(), covidKecamatan(textMessageContent.getText()) );
         } else if(textMessageContent.getText().toLowerCase().contains("p")) {
             replyText(event.getReplyToken(), covidProvinsi(textMessageContent.getText()) );
         }
@@ -212,10 +212,6 @@ public class Controller {
             getCovidEventsDataProvinsi();
         }
 
-
-
-
-        Datum eventData2 = (Datum) covidEvents2.getData().get(1);
 
         int totalPosi = 0;
         int totalMeninggal = 0;
@@ -277,7 +273,7 @@ public class Controller {
 
 
 
-    private String covid(String input){
+    private String covidKecamatan(String input){
 
         if (covidEvents == null) {
             getCovidEventsDataKecamatanMedan();
