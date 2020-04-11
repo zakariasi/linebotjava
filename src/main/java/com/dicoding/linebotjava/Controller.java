@@ -132,11 +132,12 @@ public class Controller {
     private void handleGroupRoomChats(MessageEvent event) {
         TextMessageContent textMessageContent = (TextMessageContent) event.getMessage();
 
-        if(!event.getSource().getUserId().isEmpty()) {
-            String userId = event.getSource().getUserId();
-            UserProfileResponse profile = getProfile(userId);
-            replyText(event.getReplyToken(), "Hello, " + profile.getDisplayName());
-        } else if(textMessageContent.getText().equals("hai")){
+//        if(!event.getSource().getUserId().isEmpty()) {
+//            String userId = event.getSource().getUserId();
+//            UserProfileResponse profile = getProfile(userId);
+//            replyText(event.getReplyToken(), "Hello, " + profile.getDisplayName());
+//        } else
+            if(textMessageContent.getText().equals("hai")){
             replyText(event.getReplyToken(), "Hai juga");
         }
         else {
