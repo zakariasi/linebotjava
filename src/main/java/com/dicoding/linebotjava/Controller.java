@@ -48,6 +48,7 @@ public class Controller {
 
     private CovidEvents covidEvents = null;
     private CovidEvents covidEvents2 = null;
+    private CovidEvents covidEvents3 = null;
     private BotService botService;
 
 
@@ -149,8 +150,8 @@ public class Controller {
             replyText(event.getReplyToken(), "Hai juga");
         } else if(textMessageContent.getText().toLowerCase().contains("menu")) {
             replyText(event.getReplyToken(), msgDaftarMenu);
-        } else if(textMessageContent.getText().toLowerCase().contains("a1")) {
-            replyText(event.getReplyToken(), "Data Covid-19 di Indonesia");
+        } else if(textMessageContent.getText().toLowerCase().equals("a1")) {
+            replyText(event.getReplyToken(), covidIndonesia(textMessageContent.getText()));
         } else if(textMessageContent.getText().toLowerCase().contains("a2")) {
             replyText(event.getReplyToken(), daftarProvinsi);
         } else if(textMessageContent.getText().toLowerCase().contains("a3")) {
@@ -180,7 +181,7 @@ public class Controller {
         TextMessageContent textMessageContent = (TextMessageContent) event.getMessage();
 
         List<Message> msgDaftarMenu = new ArrayList<>();
-        msgDaftarMenu.add(new TextMessage("Daftar Data Covid-19 : \n\n[A1] Data Covid-19 di Indonesia\n[A2] Data Covid-19 provinsi Indonesia\n[A3] Data Covid-19 kecamatan di kota Medan"));
+        msgDaftarMenu.add(new TextMessage("Daftar Data Covid-19 : \n\n[A0] Data Covid-19 Dunia \n[A1] Data Covid-19 di Indonesia\n[A2] Data Covid-19 provinsi Indonesia\n[A3] Data Covid-19 kecamatan di kota Medan"));
 
         String daftarProvinsi = "[P0] DKI Jakarta\n[P1] Jawa Barat\n[P2] Jawa Timur\n[P3] Banten\n[P4] Jawa Tengah\n[P5] Sulawesi Selatan\n[P6] Bali\n[P7] Papua\n[P8] Sumatera Utara\n[P9] D.I Yogyakarta\n[P10] Indonesia\n[P11] Kalimantan Timur\n[P12] Kepulauan Riau\n[P13] Kalimantan Selatan\n[P14] Kalimantan Tengah\n[P15] Sumatera Barat\n[P16] Sumatera Selatan\n[P17] Nusa Tenggara Barat\n[P18] Kalimantan Utara\n[P19] Lampung\n[P20] Sulawesi Tenggara\n[P21] Riau\n[P22] Kalimantan Barat\n[P23] Sulawesi Utara\n[P24] Aceh\n[P25] Sulawesi Tengah\n[P26] Kepulauan Bangka Belitung\n[P27] Maluku\n[P28] Jambi\n[P29] Bengkulu\n[P30] Sulawesi Barat\n[P31] Maluku Utara\n[P32] Papua Barat\n[P33] Nusa Tenggara Timur\n[P34] Gorontalo";
         String daftarKecamatanMedan = "[KC0] Medan Amplas\n[KC1] Medan Area\n[KC2] Medan Barat\n[KC3] Medan Baru\n[KC4] Medan Belawan\n[KC5] Medan Deli\n[KC6] Medan Denai\n[KC7] Medan Helvetia\n[KC8] Medan Johor\n[KC9] Medan Kota\n[KC10] Medan Labuhan\n[KC11] Medan Maimun\n[KC12] Medan Marelan\n[KC13] Medan Perjuangan\n[KC14] Medan Petisah\n[KC15] Medan Polonia\n[KC16] Medan Selayang\n[KC17] Medan Sunggal\n[KC18] Medan Tembung\n[KC19] Medan Timur\n[KC20] Medan Tuntungan\n";
@@ -193,6 +194,8 @@ public class Controller {
             showEventSummary(event.getReplyToken());
         } else if(textMessageContent.getText().toLowerCase().contains("menu")) {
             replyText(event.getReplyToken(), msgDaftarMenu);
+        } else if(textMessageContent.getText().toLowerCase().equals("a0")) {
+            replyText(event.getReplyToken(), covidDunia(textMessageContent.getText()));
         } else if(textMessageContent.getText().toLowerCase().equals("a1")) {
             replyText(event.getReplyToken(), covidIndonesia(textMessageContent.getText()));
         } else if(textMessageContent.getText().toLowerCase().contains("a2")) {
@@ -225,7 +228,7 @@ public class Controller {
 
 
 
-        String dataIndonesia = String.format("Total Positif: %s\nTotal meninggal: %s\nTotal sembuh: %s", String.valueOf(totalPosi), String.valueOf(totalMeninggal), String.valueOf(totalSembuh));
+        String dataIndonesia = String.format("Total Kasus Covid-19 di Indonesia \nTotal Positif: %s\nTotal meninggal: %s\nTotal sembuh: %s", String.valueOf(totalPosi), String.valueOf(totalMeninggal), String.valueOf(totalSembuh));
 
 
 
@@ -239,7 +242,6 @@ public class Controller {
             getCovidEventsDataProvinsi();
         }
 
-
         String inputUser = input;
         int eventIndex = 0;
         if (inputUser.length() == 3) {
@@ -249,7 +251,6 @@ public class Controller {
             eventIndex = Integer.parseInt(String.valueOf(inputUser.charAt(1)));
         }
 
-
         Datum eventData2 = (Datum) covidEvents2.getData().get(eventIndex);
 
         String namaProvinsi  = eventData2.getProvinsi().toLowerCase();
@@ -257,13 +258,7 @@ public class Controller {
         String kasusSembuh = String.valueOf(eventData2.getKasusSemb());
         String kasusMeninggal = String.valueOf(eventData2.getKasusMeni());
 
-
-
-
-
         String dataProvinsi = String.format("Nama provinsi: %s\nTotal positif: %s\nTotal sembuh: %s\nTotal meninggal: %s", namaProvinsi, kasusPositif, kasusSembuh, kasusMeninggal);
-
-
 
         return dataProvinsi;
     }
@@ -278,7 +273,6 @@ public class Controller {
         if (covidEvents == null) {
             getCovidEventsDataKecamatanMedan();
         }
-
 
         String inputUser = input;
         int eventIndex = 0;
@@ -447,6 +441,76 @@ public class Controller {
         } catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private String covidDunia(String input){
+        getCovidEventsDataDunia();
+
+
+        String totalSembuh = covidEvents.getValue();
+        String totalPositif = covidEvents2.getValue();
+        String totalMeninggal = covidEvents3.getValue();
+
+        String dataDunia = String.format("Total sembuh: %s\nTotal positif: %s\nTotal meninggal: %s", totalSembuh, totalPositif, totalMeninggal);
+
+
+
+        return dataDunia;
+    }
+
+    private void getCovidEventsDataDunia(){
+        String URI1 = "https://api.kawalcorona.com/sembuh/";
+        String URI2 = "https://api.kawalcorona.com/positif/";
+        String URI3 = "https://api.kawalcorona.com/meninggal/";
+
+        try (CloseableHttpAsyncClient client = HttpAsyncClients.createDefault()) {
+            client.start();
+            //Use HTTP Get to retrieve data
+            HttpGet get1 = new HttpGet(URI1);
+            HttpGet get2 = new HttpGet(URI2);
+            HttpGet get3 = new HttpGet(URI3);
+
+            Future<HttpResponse> future1 = client.execute(get1, null);
+            Future<HttpResponse> future2 = client.execute(get2, null);
+            Future<HttpResponse> future3 = client.execute(get3, null);
+
+
+            HttpResponse responseGet1 = future1.get();
+            HttpResponse responseGet2 = future2.get();
+            HttpResponse responseGet3 = future3.get();
+
+
+            // Get the response from the GET request
+            InputStream inputStream1 = responseGet1.getEntity().getContent();
+            InputStream inputStream2 = responseGet2.getEntity().getContent();
+            InputStream inputStream3 = responseGet3.getEntity().getContent();
+
+
+            String encoding = StandardCharsets.UTF_8.name();
+
+            String jsonResponse1 = IOUtils.toString(inputStream1, encoding);
+            String jsonResponse2 = IOUtils.toString(inputStream2, encoding);
+            String jsonResponse3 = IOUtils.toString(inputStream3, encoding);
+
+
+
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            covidEvents = objectMapper.readValue(jsonResponse1, CovidEvents.class);
+            covidEvents2 = objectMapper.readValue(jsonResponse2, CovidEvents.class);
+            covidEvents3 = objectMapper.readValue(jsonResponse3, CovidEvents.class);
+
+
+
+//            Datum eventData = (Datum) covidEvents.getData().get(1).getKec().get(1);
+//            Datum eventData2 = (Datum) covidEvents2.getData().get(1);
+
+        } catch (InterruptedException | ExecutionException | IOException e) {
+            throw new RuntimeException(e);
+        }
+
+
+
     }
 
     private void getCovidEventsDataKecamatanMedan(){
