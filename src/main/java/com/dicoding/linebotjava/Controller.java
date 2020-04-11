@@ -174,7 +174,7 @@ public class Controller {
         } else if(textMessageContent.getText().toLowerCase().contains("a3")) {
             replyText(event.getReplyToken(), daftarKecamatanMedan);
         } else if(textMessageContent.getText().toLowerCase().contains("kc")) {
-            replyText(event.getReplyToken(), dataKecamatan(textMessageContent.getText()) );
+            replyText(event.getReplyToken(), covid(textMessageContent.getText()) );
         }
     }
 
@@ -230,9 +230,12 @@ public class Controller {
             eventIndex = Integer.parseInt(String.valueOf(inputUser.charAt(2)));
         }
 
+
         Datum eventData = (Datum) covidEvents.getData().get(1).getKec().get(eventIndex);
+
+        String odp = String.valueOf(eventData.getOdp());
         String namaKecamatan  = eventData.getNama_kecamatan();
-        String dataKecamatan = String.format("Nama Kecamatan: %s", eventData.getNama_kecamatan());
+        String dataKecamatan = String.format("Nama Kecamatan: %s\n Total ODP: %s", eventData.getNama_kecamatan(), odp);
 //        String odp = String.valueOf(eventData.getOdp());
 //        String pdp = String.valueOf(eventData.getPdp());
 //        String positif = String.valueOf(eventData.getPositif());
