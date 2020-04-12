@@ -20,14 +20,19 @@ public class CovidApiTest {
         String URI = "http://ec2-3-133-88-244.us-east-2.compute.amazonaws.com/medan_covid/";
         String URI2 = "https://indonesia-covid-19.mathdro.id/api/provinsi";
         String URI3 = "https://indonesia-covid-19.mathdro.id/api/";
-        String URI4 = "https://api.kawalcorona.com/sembuh/";
-        String URI5 = "https://api.kawalcorona.com/indonesia/";
+
+        String URIKAWAL1 = "https://api.kawalcorona.com/positif/";
+        String URIKAWAL2 = "https://api.kawalcorona.com/meninggal/";
+        String URIKAWAL3 = "https://api.kawalcorona.com/sembuh/";
 
 
         CovidEvents covidEvents = null;
         CovidEvents covidEvents2 = null;
         CovidEvents covidEvents4 = null;
 
+        CovidDunia covidDunia1 = null;
+        CovidDunia covidDunia2 = null;
+        CovidDunia covidDunia3 = null;
 
         try (CloseableHttpAsyncClient client = HttpAsyncClients.createDefault()) {
             client.start();
@@ -35,58 +40,96 @@ public class CovidApiTest {
             HttpGet get = new HttpGet(URI);
             HttpGet get2 = new HttpGet(URI2);
             HttpGet get3 = new HttpGet(URI3);
-            HttpGet get4 = new HttpGet(URI4);
-            HttpGet get5 = new HttpGet(URI5);
+
+            HttpGet getKAWAL1 = new HttpGet(URIKAWAL1);
+            HttpGet getKAWAL2 = new HttpGet(URIKAWAL2);
+            HttpGet getKAWAL3 = new HttpGet(URIKAWAL3);
+
+
 
 
             Future<HttpResponse> future = client.execute(get, null);
             Future<HttpResponse> future2 = client.execute(get2, null);
             Future<HttpResponse> future3 = client.execute(get3, null);
-            Future<HttpResponse> future4 = client.execute(get4, null);
-            Future<HttpResponse> future5 = client.execute(get5, null);
+
+            Future<HttpResponse> KAWAL1 = client.execute(getKAWAL1, null);
+            Future<HttpResponse> KAWAL2 = client.execute(getKAWAL2, null);
+            Future<HttpResponse> KAWAL3 = client.execute(getKAWAL3, null);
+
+
 
             HttpResponse responseGet = future.get();
             HttpResponse responseGet2 = future2.get();
             HttpResponse responseGet3 = future3.get();
-            HttpResponse responseGet4 = future4.get();
-            HttpResponse responseGet5 = future5.get();
-//            System.out.println("HTTP executed");
-//            System.out.println("HTTP Status of response: " + responseGet.getStatusLine().getStatusCode());
+
+            HttpResponse KAWALKORONA1 = KAWAL1.get();
+            HttpResponse KAWALKORONA2 = KAWAL2.get();
+            HttpResponse KAWALKORONA3 = KAWAL3.get();
+
+
 
             // Get the response from the GET request
             InputStream inputStream = responseGet.getEntity().getContent();
             InputStream inputStream2 = responseGet2.getEntity().getContent();
             InputStream inputStream3 = responseGet3.getEntity().getContent();
-            InputStream inputStream4 = responseGet4.getEntity().getContent();
-            InputStream inputStream5 = responseGet5.getEntity().getContent();
+
+            InputStream inputKAWAL1 = KAWALKORONA1.getEntity().getContent();
+            InputStream inputKAWAL2 = KAWALKORONA2.getEntity().getContent();
+            InputStream inputKAWAL3 = KAWALKORONA3.getEntity().getContent();
+
 
             String encoding = StandardCharsets.UTF_8.name();
 
             String jsonResponse = IOUtils.toString(inputStream, encoding);
             String jsonResponse2 = IOUtils.toString(inputStream2, encoding);
             String jsonResponse3 = IOUtils.toString(inputStream3, encoding);
-            String jsonResponse4 = IOUtils.toString(inputStream4, encoding);
-            String jsonResponse5 = IOUtils.toString(inputStream5, encoding);
+
+            String jsonResponseKAWAL1 = IOUtils.toString(inputKAWAL1, encoding);
+            String jsonResponseKAWAL2 = IOUtils.toString(inputKAWAL2, encoding);
+            String jsonResponseKAWAL3 = IOUtils.toString(inputKAWAL3, encoding);
+
+            System.out.println("Got result API KAWAL 1");
+            System.out.println(jsonResponseKAWAL1);
+
+            System.out.println("Got result API KAWAL 2");
+            System.out.println(jsonResponseKAWAL2);
+
+            System.out.println("Got result API KAWAL 3");
+            System.out.println(jsonResponseKAWAL3);
+
+
+
+
+
+
+//            System.out.println("Got result API 1");
+//            System.out.println(jsonResponse);
 //
-            System.out.println("Got result API 1");
-            System.out.println(jsonResponse);
+//            System.out.println("Got result API 2");
+//            System.out.println(jsonResponse2);
+//
+//            System.out.println("Got result API 3");
+//            System.out.println(jsonResponse3);
 
-            System.out.println("Got result API 2");
-            System.out.println(jsonResponse2);
-
-            System.out.println("Got result API 3");
-            System.out.println(jsonResponse3);
-
-            System.out.println("Got result API 4");
-            System.out.println(jsonResponse4);
-
-            System.out.println("Got result API 5");
-            System.out.println(jsonResponse5);
 
             ObjectMapper objectMapper = new ObjectMapper();
             covidEvents = objectMapper.readValue(jsonResponse, CovidEvents.class);
             covidEvents2 = objectMapper.readValue(jsonResponse2, CovidEvents.class);
-            covidEvents4 = objectMapper.readValue(jsonResponse4, CovidEvents.class);
+
+            covidDunia1 =  objectMapper.readValue(jsonResponseKAWAL1, CovidDunia.class);
+            covidDunia2 =  objectMapper.readValue(jsonResponseKAWAL2, CovidDunia.class);
+            covidDunia3 =  objectMapper.readValue(jsonResponseKAWAL3, CovidDunia.class);
+
+            String name1 = covidDunia1.getName();
+            String name2 = covidDunia2.getName();
+            String name3 = covidDunia3.getName();
+
+
+            System.out.println(name1);
+            System.out.println(name2);
+            System.out.println(name3);
+
+
 
 
 
@@ -121,14 +164,6 @@ public class CovidApiTest {
             System.out.println("Data API provinsi");
             System.out.println(fid);
 
-            String name = covidEvents4.getName();
-            String value = covidEvents4.getValue();
-
-            System.out.println("Data KAWAL CORONA");
-            System.out.println(name);
-
-            System.out.println("Data KAWAL CORONA");
-            System.out.println(value);
 
 
 

@@ -49,6 +49,12 @@ public class Controller {
     private CovidEvents covidEvents = null;
     private CovidEvents covidEvents2 = null;
     private CovidEvents covidEvents3 = null;
+
+
+    private CovidDunia covidDunia1 = null;
+    private CovidDunia covidDunia2 = null;
+    private CovidDunia covidDunia3 = null;
+
     private BotService botService;
 
 
@@ -150,6 +156,8 @@ public class Controller {
             replyText(event.getReplyToken(), "Hai juga");
         } else if(textMessageContent.getText().toLowerCase().contains("menu")) {
             replyText(event.getReplyToken(), msgDaftarMenu);
+        } else if(textMessageContent.getText().toLowerCase().equals("a0")) {
+            replyText(event.getReplyToken(), covidDunia(textMessageContent.getText()));
         } else if(textMessageContent.getText().toLowerCase().equals("a1")) {
             replyText(event.getReplyToken(), covidIndonesia(textMessageContent.getText()));
         } else if(textMessageContent.getText().toLowerCase().contains("a2")) {
@@ -194,7 +202,9 @@ public class Controller {
             showEventSummary(event.getReplyToken());
         } else if(textMessageContent.getText().toLowerCase().contains("menu")) {
             replyText(event.getReplyToken(), msgDaftarMenu);
-        }  else if(textMessageContent.getText().toLowerCase().equals("a1")) {
+        } else if(textMessageContent.getText().toLowerCase().equals("a0")) {
+            replyText(event.getReplyToken(), covidDunia(textMessageContent.getText()));
+        } else if(textMessageContent.getText().toLowerCase().equals("a1")) {
             replyText(event.getReplyToken(), covidIndonesia(textMessageContent.getText()));
         } else if(textMessageContent.getText().toLowerCase().contains("a2")) {
             replyText(event.getReplyToken(), daftarProvinsi);
@@ -441,68 +451,69 @@ public class Controller {
         }
     }
 
-//    private String covidDunia(String input){
-//        getCovidEventsDataDunia();
-//
-//
-//
-//        String totalSembuh = covidEvents.getValue();
-//        String totalPositif = covidEvents2.getValue();
-//        String totalMeninggal = covidEvents3.getValue();
-//
-//        String dataDunia = String.format("Total sembuh: %s\nTotal positif: %s\nTotal meninggal: %s", totalSembuh, totalPositif, totalMeninggal);
-//
-//
-//
-//        return dataDunia;
-//    }
+    private String covidDunia(String input){
+        getCovidEventsDataDunia();
+
+
+
+        String totalPositif = covidDunia1.getValue();
+        String totalMeninggal = covidDunia2.getValue();
+        String totalSembuh = covidDunia3.getValue();
+
+        String dataDunia = String.format("Total sembuh: %s\nTotal positif: %s\nTotal meninggal: %s", totalSembuh, totalPositif, totalMeninggal);
+
+
+
+        return dataDunia;
+    }
 
     private void getCovidEventsDataDunia(){
-        String URI1 = "https://api.kawalcorona.com/sembuh/";
-        String URI2 = "https://api.kawalcorona.com/positif/";
-        String URI3 = "https://api.kawalcorona.com/meninggal/";
+        String URIKAWAL1 = "https://api.kawalcorona.com/positif/";
+        String URIKAWAL2 = "https://api.kawalcorona.com/meninggal/";
+        String URIKAWAL3 = "https://api.kawalcorona.com/sembuh/";
+
 
         try (CloseableHttpAsyncClient client = HttpAsyncClients.createDefault()) {
             client.start();
             //Use HTTP Get to retrieve data
-            HttpGet get1 = new HttpGet(URI1);
-            HttpGet get2 = new HttpGet(URI2);
-            HttpGet get3 = new HttpGet(URI3);
-
-            Future<HttpResponse> future1 = client.execute(get1, null);
-            Future<HttpResponse> future2 = client.execute(get2, null);
-            Future<HttpResponse> future3 = client.execute(get3, null);
+            HttpGet getKAWAL1 = new HttpGet(URIKAWAL1);
+            HttpGet getKAWAL2 = new HttpGet(URIKAWAL2);
+            HttpGet getKAWAL3 = new HttpGet(URIKAWAL3);
 
 
-            HttpResponse responseGet1 = future1.get();
-            HttpResponse responseGet2 = future2.get();
-            HttpResponse responseGet3 = future3.get();
+            Future<HttpResponse> KAWAL1 = client.execute(getKAWAL1, null);
+            Future<HttpResponse> KAWAL2 = client.execute(getKAWAL2, null);
+            Future<HttpResponse> KAWAL3 = client.execute(getKAWAL3, null);
+
+
+            HttpResponse KAWALKORONA1 = KAWAL1.get();
+            HttpResponse KAWALKORONA2 = KAWAL2.get();
+            HttpResponse KAWALKORONA3 = KAWAL3.get();
+
+
 
 
             // Get the response from the GET request
-            InputStream inputStream1 = responseGet1.getEntity().getContent();
-            InputStream inputStream2 = responseGet2.getEntity().getContent();
-            InputStream inputStream3 = responseGet3.getEntity().getContent();
-
+            InputStream inputKAWAL1 = KAWALKORONA1.getEntity().getContent();
+            InputStream inputKAWAL2 = KAWALKORONA2.getEntity().getContent();
+            InputStream inputKAWAL3 = KAWALKORONA3.getEntity().getContent();
 
             String encoding = StandardCharsets.UTF_8.name();
 
-            String jsonResponse1 = IOUtils.toString(inputStream1, encoding);
-            String jsonResponse2 = IOUtils.toString(inputStream2, encoding);
-            String jsonResponse3 = IOUtils.toString(inputStream3, encoding);
+            String jsonResponseKAWAL1 = IOUtils.toString(inputKAWAL1, encoding);
+            String jsonResponseKAWAL2 = IOUtils.toString(inputKAWAL2, encoding);
+            String jsonResponseKAWAL3 = IOUtils.toString(inputKAWAL3, encoding);
 
 
 
 
             ObjectMapper objectMapper = new ObjectMapper();
-            covidEvents = objectMapper.readValue(jsonResponse1, CovidEvents.class);
-            covidEvents2 = objectMapper.readValue(jsonResponse2, CovidEvents.class);
-            covidEvents3 = objectMapper.readValue(jsonResponse3, CovidEvents.class);
+            covidDunia1 =  objectMapper.readValue(jsonResponseKAWAL1, CovidDunia.class);
+            covidDunia2 =  objectMapper.readValue(jsonResponseKAWAL2, CovidDunia.class);
+            covidDunia3 =  objectMapper.readValue(jsonResponseKAWAL3, CovidDunia.class);
 
 
-
-//            Datum eventData = (Datum) covidEvents.getData().get(1).getKec().get(1);
-//            Datum eventData2 = (Datum) covidEvents2.getData().get(1);
+//
 
         } catch (InterruptedException | ExecutionException | IOException e) {
             throw new RuntimeException(e);
